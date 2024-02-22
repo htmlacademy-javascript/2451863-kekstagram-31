@@ -10,14 +10,14 @@ checkStringLength(str, 10); // false
 
 // ФУНКЦИЯ ПРОВЕРКИ НА ПАЛИНДРОМ
 const isPalyndrome = (string) => {
-  const stringNormalized = string.toLowerCase().replaceAll(' ', '');
-  const stringLength = stringNormalized.length;
+  string = string.toLowerCase().replaceAll(' ', '');
 
-  for (let i = 0; i <= stringLength / 2; i++) {
-    if (stringNormalized[i] !== stringNormalized[stringLength - 1 - i]) {
+  for (let i = 0; i < string.length / 2; i++) {
+    if (string[i] !== string[string.length - 1 - i]) {
       return false;
     }
   }
+
   return true;
 };
 
@@ -25,11 +25,12 @@ isPalyndrome('abcba'); // true
 isPalyndrome('aBcbA'); // true
 isPalyndrome('aBcCbA'); // true
 isPalyndrome('Ab  c ba'); // true
-isPalyndrome('AbCde'); //false
+isPalyndrome('AbCde'); // false
+isPalyndrome('AbCcde'); // false
 
 // ФУНКЦИЯ ВЫБОРА ВСЕХ ЧИСЕЛ ИЗ СТРОКИ
 
-const getDigits = (string) => parseInt(string.toString().replaceAll(/[^0-9]/g, ''), 10);
+const getDigits = (string) => parseInt(string.toString().replaceAll(/\D/g, ''), 10);
 
 getDigits('For breakfast I\'ll have 6 eggs'); // 6
 getDigits('For breakfast I\'ll have 6 eggs and 1.5 liters of milk'); // 615
