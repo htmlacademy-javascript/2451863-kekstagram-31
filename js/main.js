@@ -105,6 +105,23 @@ const getRandomInteger = (min, max) => {
 };
 
 // function to get random unique number from range
+const getUniqueInteger = (min, max) => {
+  const usedValues = [];
+
+  return function () {
+    if (usedValues.length >= max - min + 1) {
+      return null;
+    }
+
+    let newValue = getRandomInteger(min, max);
+    while (usedValues.includes(newValue)) {
+      newValue = getRandomInteger(min, max);
+    }
+
+    usedValues.push(newValue);
+    return newValue;
+  };
+};
 
 // function to form required url strings
 // function to form required avatar strings
