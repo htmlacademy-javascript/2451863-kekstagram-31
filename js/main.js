@@ -6,23 +6,6 @@
 //   comments:
 // }
 
-// id
-// function to generate random unique number from range
-    // function to generate random number (not unique) from range (1-25)
-    // would need to use closures
-
-// url
-// function to generate random unique number from range (1-25)
-    // function to generate random number (not unique) from range
-    // would need to use closures
-// function to form required string (`photos/${i}.jpg`)
-// range is the same as id range, may implement something similar
-
-// descrtiption
-// array with random strings to get from
-// function to get random array element
-    // function to get random number (not unique) from range
-
 // likes
 // function to get random number (not unique) from range (15-200)
 
@@ -128,6 +111,8 @@ const getUniquePhotoUrlInteger = getUniqueInteger(1, 25);
 
 const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
 
+const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
+
 // function to form required url strings
 // function to form required avatar strings
 
@@ -138,6 +123,7 @@ const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
 const createPhoto = () => ({
   id: getUniquePhotoID(),
   url: getUniquePhotoUrl(),
+  description: getRandomArrayItem(DESCRIPTIONS),
 });
 
 // function to create photo object array
