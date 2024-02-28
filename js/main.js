@@ -98,6 +98,12 @@ const COMMENT_SENTENCES = [
 // function to get random unique number
 
 // function to get random number from range
+const getRandomInteger = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 // function to get random unique number from range
 
 // function to form required url strings
