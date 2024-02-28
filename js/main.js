@@ -123,6 +123,11 @@ const getUniqueInteger = (min, max) => {
   };
 };
 
+const getUniquePhotoID = getUniqueInteger(1, 25);
+const getUniquePhotoUrlInteger = getUniqueInteger(1, 25);
+
+const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
+
 // function to form required url strings
 // function to form required avatar strings
 
@@ -130,5 +135,13 @@ const getUniqueInteger = (min, max) => {
 // function to create comment objects array
 
 // function to create photo object
+const createPhoto = () => ({
+  id: getUniquePhotoID(),
+  url: getUniquePhotoUrl(),
+});
+
 // function to create photo object array
 
+const photos = Array.from({length: 25}, createPhoto);
+
+console.log(photos);
