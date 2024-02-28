@@ -48,24 +48,42 @@
 
 // Array with random names to choose from
 const NAMES = [
-  'Анатолий Вениаминович',
-  'Вероника Степанова',
-  'Артур Пирожков',
-  'Вася (из третьего подъезда)',
-  'Валентин',
-  'Сталкер228',
-  'Иван Андреевич',
-  'Анастасия Борисовна',
-  'Иванов Петр Васильевич',
-  'Маришка',
-  'Персефона',
-  'Персона нон грата',
-  'Инкогнито',
-  'Суровый наставник',
-  'Добрый наставник'
+  'name-placeholder-1',
+  'name-placeholder-2',
+  'name-placeholder-3',
+  'name-placeholder-4',
+  'name-placeholder-5',
+  'name-placeholder-6',
+  'name-placeholder-7',
+  'name-placeholder-8',
+  'name-placeholder-9',
+  'name-placeholder-10',
+  'name-placeholder-11',
+  'name-placeholder-12',
+  'name-placeholder-13',
+  'name-placeholder-14',
+  'name-placeholder-15',
 ];
 
 // Array with random descriptions
+const DESCRIPTIONS = [
+  'desc-placeholder-1',
+  'desc-placeholder-2',
+  'desc-placeholder-3',
+  'desc-placeholder-4',
+  'desc-placeholder-5',
+  'desc-placeholder-6',
+  'desc-placeholder-7',
+  'desc-placeholder-8',
+  'desc-placeholder-9',
+  'desc-placeholder-10',
+  'desc-placeholder-11',
+  'desc-placeholder-12',
+  'desc-placeholder-13',
+  'desc-placeholder-14',
+  'desc-placeholder-15',
+];
+
 // Array with sentences for comments
 
 
