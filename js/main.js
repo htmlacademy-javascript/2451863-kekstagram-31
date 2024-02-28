@@ -1,14 +1,3 @@
-// {
-//   id: ,
-//   url: ,
-//   description: ,
-//   likes: ,
-//   comments:
-// }
-
-// likes
-// function to get random number (not unique) from range (15-200)
-
 // comments
 // function to generate array of objects (Array.from()) with random length
     //function to get random number from range (0-30)
@@ -29,7 +18,6 @@
 
 // TO DO LIST
 
-// Array with random names to choose from
 const NAMES = [
   'name-placeholder-1',
   'name-placeholder-2',
@@ -48,7 +36,6 @@ const NAMES = [
   'name-placeholder-15',
 ];
 
-// Array with random descriptions
 const DESCRIPTIONS = [
   'desc-placeholder-1',
   'desc-placeholder-2',
@@ -67,7 +54,6 @@ const DESCRIPTIONS = [
   'desc-placeholder-15',
 ];
 
-// Array with sentences for comments
 const COMMENT_SENTENCES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -77,8 +63,8 @@ const COMMENT_SENTENCES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-// function to get random number
-// function to get random unique number
+const LIKES_MIN = 15;
+const LIKES_MAX = 200;
 
 // function to get random number from range
 const getRandomInteger = (min, max) => {
@@ -124,6 +110,7 @@ const createPhoto = () => ({
   id: getUniquePhotoID(),
   url: getUniquePhotoUrl(),
   description: getRandomArrayItem(DESCRIPTIONS),
+  likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
 });
 
 // function to create photo object array
