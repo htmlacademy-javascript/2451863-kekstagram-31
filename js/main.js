@@ -1,11 +1,3 @@
-
-    // name
-        // array with names
-        // function to get random number from range
-
-
-// TO DO LIST
-
 const NAMES = [
   'name-placeholder-1',
   'name-placeholder-2',
