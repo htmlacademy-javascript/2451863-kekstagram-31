@@ -1,0 +1,1 @@
+import {generatePhotos} from './data';

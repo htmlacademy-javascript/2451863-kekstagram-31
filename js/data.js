@@ -65,7 +65,6 @@ const COMMENTS_PHRASES_MAX = 2;
 
 const PHOTOS_COUNT = 25;
 
-
 const getUniquePhotoID = getUniqueIntegerFromRange(PHOTO_ID_MIN, PHOTO_ID_MAX);
 
 const getUniquePhotoUrlInteger = getUniqueIntegerFromRange(PHOTO_URL_MIN, PHOTO_URL_MAX);
@@ -100,4 +99,6 @@ const createPhoto = () => ({
   comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
 });
 
-const photos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
+const generatePhotos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
+
+export {generatePhotos};
