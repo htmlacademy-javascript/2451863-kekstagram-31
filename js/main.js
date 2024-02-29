@@ -114,8 +114,9 @@ const getRandomAvatar = () => `img/avatar-${getRandomInteger(AVATAR_URL_MIN, AVA
 const getRandomMessage = (sentenceAmount) => {
   let message = '';
   for (let i = 0; i < sentenceAmount; i++) {
-    message = message.concat(' ', getRandomArrayItem(COMMENT_SENTENCES));
+    message = message.concat(getRandomArrayItem(COMMENT_SENTENCES), ' ');
   }
+  message = message.trim();
   return message;
 };
 
@@ -126,24 +127,14 @@ const createComment = () => ({
   name: getRandomArrayItem(NAMES)
 });
 
-// function to form required avatar strings
-// function to create comment object
-// function to create comment objects array
-
-// function to create photo object
 const createPhoto = () => ({
   id: getUniquePhotoID(),
   url: getUniquePhotoUrl(),
   description: getRandomArrayItem(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
-  //comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
+  comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
 });
 
-// function to create photo object array
+const photos = Array.from({length: 25}, createPhoto);
 
-//const photos = Array.from({length: 25}, createPhoto);
-
-//console.log(photos.comments);
-
-const comments = Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment)
-console.log(comments);
+console.log(photos);
