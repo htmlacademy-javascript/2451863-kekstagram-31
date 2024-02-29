@@ -1,0 +1,34 @@
+const getRandomInteger = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const getUniqueIntegerFromRange = (min, max) => {
+  const usedValues = [];
+
+  return function () {
+    if (usedValues.length >= max - min + 1) {
+      return null;
+    }
+
+    let newValue = getRandomInteger(min, max);
+    while (usedValues.includes(newValue)) {
+      newValue = getRandomInteger(min, max);
+    }
+
+    usedValues.push(newValue);
+    return newValue;
+  };
+};
+
+const getUniqueInteger = () => {
+  let integer = 0;
+
+  return function () {
+    integer++;
+    return integer;
+  };
+};
+
+const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];

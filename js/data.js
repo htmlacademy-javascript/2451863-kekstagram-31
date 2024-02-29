@@ -63,46 +63,11 @@ const COMMENTS_PHRASES_MAX = 2;
 
 const PHOTOS_COUNT = 25;
 
-const getRandomInteger = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getUniqueIntegerFromRange = (min, max) => {
-  const usedValues = [];
-
-  return function () {
-    if (usedValues.length >= max - min + 1) {
-      return null;
-    }
-
-    let newValue = getRandomInteger(min, max);
-    while (usedValues.includes(newValue)) {
-      newValue = getRandomInteger(min, max);
-    }
-
-    usedValues.push(newValue);
-    return newValue;
-  };
-};
-
-const getUniqueInteger = () => {
-  let integer = 0;
-
-  return function () {
-    integer++;
-    return integer;
-  };
-};
-
 const getUniquePhotoID = getUniqueIntegerFromRange(PHOTO_ID_MIN, PHOTO_ID_MAX);
 
 const getUniquePhotoUrlInteger = getUniqueIntegerFromRange(PHOTO_URL_MIN, PHOTO_URL_MAX);
 
 const getUniqueCommentID = getUniqueInteger();
-
-const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
 
 const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
 
