@@ -1,3 +1,5 @@
+import {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem} from './utils.js';
+
 const NAMES = [
   'name-placeholder-1',
   'name-placeholder-2',
@@ -62,6 +64,7 @@ const COMMENTS_PHRASES_MIN = 1;
 const COMMENTS_PHRASES_MAX = 2;
 
 const PHOTOS_COUNT = 25;
+
 
 const getUniquePhotoID = getUniqueIntegerFromRange(PHOTO_ID_MIN, PHOTO_ID_MAX);
 
