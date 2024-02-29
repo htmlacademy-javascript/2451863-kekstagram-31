@@ -42,7 +42,7 @@ const DESCRIPTIONS = [
   'desc-placeholder-15',
 ];
 
-const COMMENT_SENTENCES = [
+const COMMENT_PHRASES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -65,6 +65,9 @@ const COMMENTS_AMOUNT_MAX = 30;
 
 const AVATAR_URL_MIN = 1;
 const AVATAR_URL_MAX = 6;
+
+const COMMENTS_PHRASES_MIN = 1;
+const COMMENTS_PHRASES_MAX = 2;
 
 const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
@@ -111,10 +114,10 @@ const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
 
 const getRandomAvatar = () => `img/avatar-${getRandomInteger(AVATAR_URL_MIN, AVATAR_URL_MAX)}.svg`;
 
-const getRandomMessage = (sentenceAmount) => {
+const getRandomMessage = (phraseAmount) => {
   let message = '';
-  for (let i = 0; i < sentenceAmount; i++) {
-    message = message.concat(getRandomArrayItem(COMMENT_SENTENCES), ' ');
+  for (let i = 0; i < phraseAmount; i++) {
+    message = message.concat(getRandomArrayItem(COMMENT_PHRASES), ' ');
   }
   message = message.trim();
   return message;
@@ -123,7 +126,7 @@ const getRandomMessage = (sentenceAmount) => {
 const createComment = () => ({
   id: getUniqueCommentID(),
   avatar: getRandomAvatar(),
-  message: getRandomMessage(getRandomInteger(1, 2)),
+  message: getRandomMessage(getRandomInteger(COMMENTS_PHRASES_MIN, COMMENTS_PHRASES_MAX)),
   name: getRandomArrayItem(NAMES)
 });
 
