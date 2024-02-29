@@ -61,6 +61,8 @@ const AVATAR_URL_MAX = 6;
 const COMMENTS_PHRASES_MIN = 1;
 const COMMENTS_PHRASES_MAX = 2;
 
+const PHOTOS_COUNT = 25;
+
 const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -130,4 +132,4 @@ const createPhoto = () => ({
   comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
 });
 
-const photos = Array.from({length: 25}, createPhoto);
+const photos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
