@@ -1,16 +1,4 @@
-// comments
-// function to generate array of objects (Array.from()) with random length
-    //function to get random number from range (0-30)
-// function to generate comment object (to pass to Array.from())
-    // id
-        // function to generate random unique number
-    // avatar
-        // function to get random number from range (1-6)
-        // function to form required string (`img/avatar-${i}.svg`)
-    // message
-        // array with sentences
-        // function to get random number from range (1-2) (to get sentences quantity)
-        // function to get random unique number from range (1-6) (to get unique sentences for evety comment)
+
     // name
         // array with names
         // function to get random number from range
@@ -66,15 +54,25 @@ const COMMENT_SENTENCES = [
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
 
-// function to get random number from range
+const PHOTO_ID_MIN = 1;
+const PHOTO_ID_MAX = 25;
+
+const PHOTO_URL_MIN = 1;
+const PHOTO_URL_MAX = 25;
+
+const COMMENTS_AMOUNT_MIN = 0;
+const COMMENTS_AMOUNT_MAX = 30;
+
+const AVATAR_URL_MIN = 1;
+const AVATAR_URL_MAX = 6;
+
 const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// function to get random unique number from range
-const getUniqueInteger = (min, max) => {
+const getUniqueIntegerFromRange = (min, max) => {
   const usedValues = [];
 
   return function () {
@@ -92,16 +90,43 @@ const getUniqueInteger = (min, max) => {
   };
 };
 
-const getUniquePhotoID = getUniqueInteger(1, 25);
-const getUniquePhotoUrlInteger = getUniqueInteger(1, 25);
+const getUniqueInteger = () => {
+  let integer = 0;
 
-const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
+  return function () {
+    integer++;
+    return integer;
+  };
+};
+
+const getUniquePhotoID = getUniqueIntegerFromRange(PHOTO_ID_MIN, PHOTO_ID_MAX);
+
+const getUniquePhotoUrlInteger = getUniqueIntegerFromRange(PHOTO_URL_MIN, PHOTO_URL_MAX);
+
+const getUniqueCommentID = getUniqueInteger();
 
 const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
 
-// function to form required url strings
-// function to form required avatar strings
+const getUniquePhotoUrl = () => `photos/${getUniquePhotoUrlInteger()}.jpg`;
 
+const getRandomAvatar = () => `img/avatar-${getRandomInteger(AVATAR_URL_MIN, AVATAR_URL_MAX)}.svg`;
+
+const getRandomMessage = (sentenceAmount) => {
+  let message = '';
+  for (let i = 0; i < sentenceAmount; i++) {
+    message = message.concat(' ', getRandomArrayItem(COMMENT_SENTENCES));
+  }
+  return message;
+};
+
+const createComment = () => ({
+  id: getUniqueCommentID(),
+  avatar: getRandomAvatar(),
+  message: getRandomMessage(getRandomInteger(1, 2)),
+  name: getRandomArrayItem(NAMES)
+});
+
+// function to form required avatar strings
 // function to create comment object
 // function to create comment objects array
 
@@ -111,10 +136,14 @@ const createPhoto = () => ({
   url: getUniquePhotoUrl(),
   description: getRandomArrayItem(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
+  //comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
 });
 
 // function to create photo object array
 
-const photos = Array.from({length: 25}, createPhoto);
+//const photos = Array.from({length: 25}, createPhoto);
 
-console.log(photos);
+//console.log(photos.comments);
+
+const comments = Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment)
+console.log(comments);
