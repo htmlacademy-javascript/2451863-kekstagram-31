@@ -4,7 +4,7 @@ const MINUTES_IN_HOURS = 60;
 
 const convertTimeToMinutes = (timeString) => {
   const timeSplit = timeString.split(':');
-  const timeInMinutes = +timeSplit[0] * 60 + +timeSplit[1];
+  const timeInMinutes = Number(timeSplit[0]) * 60 + Number(timeSplit[1]);
   return timeInMinutes;
 };
 
