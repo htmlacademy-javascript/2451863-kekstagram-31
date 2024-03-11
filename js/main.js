@@ -1,3 +1,3 @@
-import {generatePhotos} from './generate-photos.js';
+import {generatePhotos} from './generate-miniatures.js';
 
 generatePhotos();
