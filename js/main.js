@@ -1,3 +1,3 @@
-import {drawMiniatures} from './draw-miniatures.js';
+import {renderMiniatures, miniaturesSection} from './render-miniatures.js';
 
-drawMiniatures();
+renderMiniatures(miniaturesSection);
