@@ -1,3 +1,3 @@
-import {generatePhotos} from './generate-photos.js';
+import {renderMiniatures, miniaturesSection} from './render-miniatures.js';
 
-generatePhotos();
+renderMiniatures(miniaturesSection);

@@ -57,6 +57,6 @@ const createPhoto = () => ({
   comments: Array.from({length: getRandomInteger(COMMENTS_AMOUNT_MIN, COMMENTS_AMOUNT_MAX)}, createComment),
 });
 
-const generatePhotos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
+const generateMiniatures = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
 
-export {generatePhotos};
+export {generateMiniatures};
