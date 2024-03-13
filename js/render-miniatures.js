@@ -1,15 +1,12 @@
-import {generateMiniatures} from './generate-miniatures.js';
-
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('a');
 const miniaturesFragment = document.createDocumentFragment();
 const miniaturesSection = document.querySelector('.pictures');
 
-const renderMiniatures = (renderTarget) => {
-  const miniatures = generateMiniatures();
-
-  miniatures.forEach(({url, description, likes, comments}) => {
+const renderMiniatures = (miniatures, renderTarget) => {
+  miniatures.forEach(({id, url, description, likes, comments}) => {
     const newMiniature = miniatureTemplate.cloneNode(true);
 
+    newMiniature.querySelector('img').id = id;
     newMiniature.querySelector('img').src = url;
     newMiniature.querySelector('img').alt = description;
     newMiniature.querySelector('.picture__likes').textContent = likes;
