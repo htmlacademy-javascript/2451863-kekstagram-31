@@ -4,7 +4,6 @@ import {onMiniatureClick} from './full-image.js';
 
 const miniaturesList = generateMiniatures();
 renderMiniatures(miniaturesList, miniaturesSection);
-console.log(miniaturesList);
 
 miniaturesSection.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')) {
