@@ -13,8 +13,6 @@ const onEscKeydown = (evt) => {
   }
 };
 
-
-
 const tempCommentsCountAndLoadDisable = () => {
   bigPicture.querySelector('.social__comment-count').classList.add('hidden');
   bigPicture.querySelector('.comments-loader').classList.add('hidden');
