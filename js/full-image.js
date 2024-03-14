@@ -4,6 +4,7 @@ const MIN_SHOWN_COMMENTS_COUNT = 3;
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
+const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -11,6 +12,8 @@ const onEscKeydown = (evt) => {
     closeBigPicture();
   }
 };
+
+
 
 const tempCommentsCountAndLoadDisable = () => {
   bigPicture.querySelector('.social__comment-count').classList.add('hidden');
@@ -21,12 +24,14 @@ function closeBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
+  bigPictureCancel.removeEventListener('click', closeBigPicture);
 }
 
 function openBigPicture() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
+  bigPictureCancel.addEventListener('click', closeBigPicture);
 }
 
 const renderPictureComments = (comments) => {
@@ -62,7 +67,5 @@ const onMiniatureClick = (miniature) => {
   renderPictureInformation(miniature);
   openBigPicture();
 };
-
-bigPicture.querySelector('.big-picture__cancel').addEventListener('click', closeBigPicture);
 
 export {onMiniatureClick};
