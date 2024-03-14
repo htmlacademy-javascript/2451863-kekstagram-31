@@ -1,23 +1,31 @@
-import { isEscapeKey } from "./utils.js";
+import { isEscapeKey } from './utils.js';
 
-const SHOWN_COMMENTS_COUNT = 3;
+const MIN_SHOWN_COMMENTS_COUNT = 3;
 
 const bigPicture = document.querySelector('.big-picture');
+const body = document.querySelector('body');
 
 const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
 };
 
+const tempCommentsCountAndLoadDisable = () => {
+  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('hidden');
+};
+
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
 }
 
 function openBigPicture() {
   bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
 }
 
@@ -29,7 +37,7 @@ const renderPictureComments = (comments) => {
 
   bigPicture.querySelectorAll('.social__comment').forEach((elem) => elem.remove());
 
-  commentsShownCount.textContent = (comments.length >= SHOWN_COMMENTS_COUNT) ? SHOWN_COMMENTS_COUNT : comments.length;
+  commentsShownCount.textContent = (comments.length >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : comments.length;
   commentsTotalCount.textContent = comments.length;
 
   for (let i = 0; i < Number(commentsShownCount.textContent); i++) {
@@ -39,6 +47,8 @@ const renderPictureComments = (comments) => {
     comment.querySelector('.social__text').textContent = comments[i].message;
     commentSection.appendChild(comment);
   }
+
+  tempCommentsCountAndLoadDisable();
 };
 
 const renderPictureInformation = ({url, description, likes, comments}) => {
