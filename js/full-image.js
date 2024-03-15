@@ -13,11 +13,6 @@ const onEscKeydown = (evt) => {
   }
 };
 
-const tempCommentsCountAndLoadDisable = () => {
-  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-  bigPicture.querySelector('.comments-loader').classList.add('hidden');
-};
-
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -45,7 +40,7 @@ const renderPictureComments = (comments) => {
 
   for (let i = 0; i < Number(commentsShownCount.textContent); i++) {
     const comment = commentTemplate.cloneNode(true);
-    //comment.id = comments[i].id;
+    comment.id = comments[i].id;
     comment.querySelector('.social__picture').src = comments[i].avatar;
     comment.querySelector('.social__text').textContent = comments[i].message;
     commentSection.appendChild(comment);
