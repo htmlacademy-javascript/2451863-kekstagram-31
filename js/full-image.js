@@ -27,7 +27,7 @@ function openBigPicture() {
   bigPictureCancel.addEventListener('click', closeBigPicture);
 }
 
-const renderPictureComments = (comments) => {
+const createBigPictureComments = (comments) => {
   const commentTemplate = bigPicture.querySelector('.social__comment');
   const commentSection = bigPicture.querySelector('.social__comments');
   const commentsShownCount = bigPicture.querySelector('.social__comment-shown-count');
@@ -40,24 +40,22 @@ const renderPictureComments = (comments) => {
 
   for (let i = 0; i < Number(commentsShownCount.textContent); i++) {
     const comment = commentTemplate.cloneNode(true);
-    comment.id = comments[i].id;
+    //comment.id = comments[i].id;
     comment.querySelector('.social__picture').src = comments[i].avatar;
     comment.querySelector('.social__text').textContent = comments[i].message;
     commentSection.appendChild(comment);
   }
-
-  tempCommentsCountAndLoadDisable();
 };
 
-const renderPictureInformation = ({url, description, likes, comments}) => {
+const createBigPictureInformation = ({url, description, likes, comments}) => {
   bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.social__caption').textContent = description;
-  renderPictureComments(comments);
 };
 
 const onMiniatureClick = (miniature) => {
-  renderPictureInformation(miniature);
+  createBigPictureInformation(miniature);
+  createBigPictureComments(miniature.comments);
   openBigPicture();
 };
 
