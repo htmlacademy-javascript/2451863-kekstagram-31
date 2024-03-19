@@ -5,6 +5,7 @@ const MIN_SHOWN_COMMENTS_COUNT = 5;
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+const commentLoadButton = bigPicture.querySelector('.social__comments-loader');
 
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -13,19 +14,36 @@ const onEscKeydown = (evt) => {
   }
 };
 
-const getCommentsShownCount = () => bigPicture.querySelectorAll('.social__comment').length;
+const updateShownCommentsCount = () => bigPicture.querySelectorAll('.social__comment').length;
 
 const removeDisplayedComments = () => {
   bigPicture.querySelectorAll('.social__comment').forEach((elem) => elem.remove());
 };
 
-const renderBigPictureComments = (firstComment, lastComment, commentInfo, commentTemplate, targetSection) => {
-  for(let i = firstComment; i < firstComment + lastComment; i++) {
-    const comment = commentTemplate.cloneNode(true);
-    comment.id = commentInfo[i].id;
-    comment.querySelector('.social__picture').src = commentInfo[i].avatar;
-    comment.querySelector('.social__text').textContent = commentInfo[i].message;
-    targetSection.appendChild(comment);
+const renderComment = (commentData, commentTemplate, renderTarget) => {
+  const comment = commentTemplate.cloneNode(true);
+
+  comment.id = commentData.id;
+  comment.querySelector('.social__picture').src = commentData.avatar;
+  comment.querySelector('.social__text').textContent = commentData.message;
+
+  renderTarget.appendChild(comment);
+};
+
+const renderBigPictureComments = (maxComments, comments, commentTemplate, renderTarget) => function () {
+  let commentsShownCount = updateShownCommentsCount();
+  const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');
+  const commentsToRender = (maxComments - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : maxComments - commentsShownCount;
+
+  for(let i = commentsShownCount; i < commentsShownCount + commentsToRender; i++) {
+    renderComment(comments[i], commentTemplate, renderTarget);
+  }
+
+  commentsShownCount = updateShownCommentsCount();
+  commentsShownCountDisplay.textContent = commentsShownCount;
+
+  if (commentsShownCount === maxComments) {
+    commentLoadButton.classList.add('hidden');
   }
 };
 
@@ -33,28 +51,15 @@ const createBigPictureComments = (comments) => {
   const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
   const commentSection = bigPicture.querySelector('.social__comments');
 
-  const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');
   const commentsTotalCountDisplay = bigPicture.querySelector('.social__comment-total-count');
-
-  const commentLoadButton = bigPicture.querySelector('.social__comments-loader');
 
   const commentsTotalCount = comments.length;
   commentsTotalCountDisplay.textContent = commentsTotalCount;
 
-  let commentsShownCount = getCommentsShownCount();
-  let commentsToRender = (commentsTotalCount - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : commentsTotalCount - commentsShownCount;
+  const commentsRender = renderBigPictureComments(commentsTotalCount, comments, commentTemplate, commentSection);
+  commentsRender();
 
-  renderBigPictureComments(commentsShownCount, commentsToRender, comments, commentTemplate, commentSection);
-
-  commentsShownCount += commentsToRender;
-  commentsShownCountDisplay.textContent = commentsShownCount;
-
-  commentLoadButton.addEventListener('click', () => {
-    commentsToRender = (commentsTotalCount - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : commentsTotalCount - commentsShownCount;
-    renderBigPictureComments(commentsShownCount, commentsToRender, comments, commentTemplate, commentSection);
-    commentsShownCount += commentsToRender;
-    commentsShownCountDisplay.textContent = commentsShownCount;
-  });
+  commentLoadButton.addEventListener('click', commentsRender);
 };
 
 const createBigPictureInformation = ({url, description, likes}) => {
