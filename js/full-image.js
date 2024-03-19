@@ -7,7 +7,11 @@ const body = document.querySelector('body');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const commentLoadButton = bigPicture.querySelector('.social__comments-loader');
 
-const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
+const bigPictureImage = bigPicture.querySelector('.big-picture__img').querySelector('img');
+const bigPictureLikes = bigPicture.querySelector('.likes-count');
+const bigPictureCaption = bigPicture.querySelector('.social__caption');
+
+  const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
 const commentSection = bigPicture.querySelector('.social__comments');
 const commentsTotalCountDisplay = bigPicture.querySelector('.social__comment-total-count');
 const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');
@@ -38,8 +42,6 @@ const renderComment = (commentData) => {
 };
 
 const renderBigPictureComments = () => {
-
-
   let commentsShownCount = updateShownCommentsCount();
   const commentsToRender = (comments.length - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : comments.length - commentsShownCount;
 
@@ -56,9 +58,10 @@ const renderBigPictureComments = () => {
 };
 
 const createBigPictureInformation = ({url, description, likes}) => {
-  bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__caption').textContent = description;
+  bigPictureImage.src = url;
+  bigPictureImage.alt = description;
+  bigPictureLikes.textContent = likes;
+  bigPictureCaption.textContent = description;
 
   commentsTotalCountDisplay.textContent = comments.length;
   renderBigPictureComments();
@@ -73,17 +76,21 @@ const onMiniatureClick = (miniature) => {
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
+
   document.removeEventListener('keydown', onEscKeydown);
   bigPictureCancel.removeEventListener('click', closeBigPicture);
-  removeDisplayedComments();
+
   commentLoadButton.removeEventListener('click', renderBigPictureComments);
+  removeDisplayedComments();
 }
 
 function openBigPicture() {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
+
   document.addEventListener('keydown', onEscKeydown);
   bigPictureCancel.addEventListener('click', closeBigPicture);
+
   commentLoadButton.addEventListener('click', renderBigPictureComments);
   commentLoadButton.classList.remove('hidden');
 }
