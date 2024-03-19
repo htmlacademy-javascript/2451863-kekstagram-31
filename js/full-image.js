@@ -7,6 +7,11 @@ const body = document.querySelector('body');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const commentLoadButton = bigPicture.querySelector('.social__comments-loader');
 
+const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
+const commentSection = bigPicture.querySelector('.social__comments');
+const commentsTotalCountDisplay = bigPicture.querySelector('.social__comment-total-count');
+const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');
+
 const onEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -20,7 +25,7 @@ const removeDisplayedComments = () => {
   bigPicture.querySelectorAll('.social__comment').forEach((elem) => elem.remove());
 };
 
-const renderComment = (commentData, commentTemplate, renderTarget) => {
+const renderComment = (commentData, renderTarget) => {
   const comment = commentTemplate.cloneNode(true);
 
   comment.id = commentData.id;
@@ -30,33 +35,26 @@ const renderComment = (commentData, commentTemplate, renderTarget) => {
   renderTarget.appendChild(comment);
 };
 
-const renderBigPictureComments = (maxComments, comments, commentTemplate, renderTarget) => function () {
+const renderBigPictureComments = (comments, renderTarget) => function () {
   let commentsShownCount = updateShownCommentsCount();
-  const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');
-  const commentsToRender = (maxComments - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : maxComments - commentsShownCount;
+  const commentsToRender = (comments.length - commentsShownCount >= MIN_SHOWN_COMMENTS_COUNT) ? MIN_SHOWN_COMMENTS_COUNT : comments.length - commentsShownCount;
 
   for(let i = commentsShownCount; i < commentsShownCount + commentsToRender; i++) {
-    renderComment(comments[i], commentTemplate, renderTarget);
+    renderComment(comments[i], renderTarget);
   }
 
   commentsShownCount = updateShownCommentsCount();
   commentsShownCountDisplay.textContent = commentsShownCount;
 
-  if (commentsShownCount === maxComments) {
+  if (commentsShownCount === comments.length) {
     commentLoadButton.classList.add('hidden');
   }
 };
 
 const createBigPictureComments = (comments) => {
-  const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
-  const commentSection = bigPicture.querySelector('.social__comments');
+  commentsTotalCountDisplay.textContent = comments.length;
 
-  const commentsTotalCountDisplay = bigPicture.querySelector('.social__comment-total-count');
-
-  const commentsTotalCount = comments.length;
-  commentsTotalCountDisplay.textContent = commentsTotalCount;
-
-  const commentsRender = renderBigPictureComments(commentsTotalCount, comments, commentTemplate, commentSection);
+  const commentsRender = renderBigPictureComments(comments, commentSection);
   commentsRender();
 
   commentLoadButton.addEventListener('click', commentsRender);
