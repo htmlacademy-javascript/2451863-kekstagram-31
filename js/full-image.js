@@ -51,15 +51,10 @@ const renderBigPictureComments = () => {
 
   commentsShownCount = updateShownCommentsCount();
   commentsShownCountDisplay.textContent = commentsShownCount;
-  console.log('before check');
-  console.log(`commentsShownCount = ${commentsShownCount}, ${typeof commentsShownCount}`);
-  console.log(`comments.length = ${comments.length}, ${typeof comments.length}`);
 
   if (commentsShownCount === comments.length) {
     commentLoadButton.classList.add('hidden');
   }
-
-  console.log('after check');
 };
 
 const createBigPictureInformation = ({url, description, likes}) => {
