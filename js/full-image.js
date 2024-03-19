@@ -78,6 +78,7 @@ function closeBigPicture() {
   document.removeEventListener('keydown', onEscKeydown);
   bigPictureCancel.removeEventListener('click', closeBigPicture);
   removeDisplayedComments();
+  commentLoadButton.classList.remove('hidden');
 }
 
 function openBigPicture() {
