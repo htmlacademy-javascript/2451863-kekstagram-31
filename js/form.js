@@ -1,13 +1,13 @@
 import {isEscapeKey, openModal, closeModal} from './utils.js';
-import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInputElement, uploadDescriptionInputElement} from './form-validation.js';
+import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
 
-const uploadFormElement = document.querySelector('.img-upload__form');
-const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
-const uploadInputElement = uploadFormElement.querySelector('.img-upload__input');
-const uploadCancelElement = uploadFormElement.querySelector('.img-upload__cancel');
+const uploadForm = document.querySelector('.img-upload__form');
+const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
+const uploadInput = uploadForm.querySelector('.img-upload__input');
+const uploadCancel = uploadForm.querySelector('.img-upload__cancel');
 
 const onEscKeydown = (evt) => {
-  if (document.activeElement === uploadHashtagsInputElement || document.activeElement === uploadDescriptionInputElement) {
+  if (document.activeElement === uploadHashtagsInput || document.activeElement === uploadDescriptionInput) {
     evt.stopPropagation();
   } else if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -16,25 +16,25 @@ const onEscKeydown = (evt) => {
 };
 
 function openUploadOverlay () {
-  openModal(uploadOverlayElement);
+  openModal(uploadOverlay);
 
   document.addEventListener('keydown', onEscKeydown);
-  uploadCancelElement.addEventListener('click', closeUploadOverlay);
+  uploadCancel.addEventListener('click', closeUploadOverlay);
 
   createPristineValidator();
-  uploadFormElement.addEventListener('submit', validateForm);
+  uploadForm.addEventListener('submit', validateForm);
 }
 
 function closeUploadOverlay () {
-  closeModal(uploadOverlayElement);
+  closeModal(uploadOverlay);
 
   document.removeEventListener('keydown', onEscKeydown);
-  uploadCancelElement.removeEventListener('click', closeUploadOverlay);
+  uploadCancel.removeEventListener('click', closeUploadOverlay);
 
-  uploadFormElement.removeEventListener('submit', validateForm);
+  uploadForm.removeEventListener('submit', validateForm);
   destroyPristineValidator();
 
-  uploadFormElement.reset();
+  uploadForm.reset();
 }
 
-uploadInputElement.addEventListener('change', openUploadOverlay);
+uploadInput.addEventListener('change', openUploadOverlay);

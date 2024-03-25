@@ -1,7 +1,7 @@
-const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadForm = document.querySelector('.img-upload__form');
 
-const uploadHashtagsInputElement = uploadFormElement.querySelector('.text__hashtags');
-const uploadDescriptionInputElement = uploadFormElement.querySelector('.text__description');
+const uploadHashtagsInput = uploadForm.querySelector('.text__hashtags');
+const uploadDescriptionInput = uploadForm.querySelector('.text__description');
 
 const hashtagRegexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
@@ -25,13 +25,13 @@ const checkUniqueHashtag = (hashtagsList) => hashtagsList.every((value, index, a
 const checkHashtagCount = (hashtagsList) => hashtagsList.length <= HASHTAGS_COUNT_MAX;
 
 const validateHashtags = () => {
-  const hashtagsList = uploadHashtagsInputElement.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
+  const hashtagsList = uploadHashtagsInput.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
 
   return checkIndividualHashtag(hashtagsList) && checkUniqueHashtag(hashtagsList) && checkHashtagCount(hashtagsList);
 };
 
 const getHashtagValidationErrorMessage = () => {
-  const hashtagsList = uploadHashtagsInputElement.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
+  const hashtagsList = uploadHashtagsInput.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
 
   if (!checkIndividualHashtag(hashtagsList)) {
     return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_INVALID;
@@ -44,18 +44,18 @@ const getHashtagValidationErrorMessage = () => {
   }
 };
 
-const validateDescriptionLength = () => uploadDescriptionInputElement.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
+const validateDescriptionLength = () => uploadDescriptionInput.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
 
 const createPristineValidator = () => {
-  pristine = new Pristine(uploadFormElement, {
+  pristine = new Pristine(uploadForm, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
     errorTextTag: 'div',
   });
 
-  pristine.addValidator(uploadHashtagsInputElement, validateHashtags, getHashtagValidationErrorMessage);
-  pristine.addValidator(uploadDescriptionInputElement, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
+  pristine.addValidator(uploadHashtagsInput, validateHashtags, getHashtagValidationErrorMessage);
+  pristine.addValidator(uploadDescriptionInput, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
 };
 
 const destroyPristineValidator = () => {
@@ -67,4 +67,4 @@ const validateForm = (evt) => {
   pristine.validate();
 };
 
-export {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInputElement, uploadDescriptionInputElement};
+export {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput};
