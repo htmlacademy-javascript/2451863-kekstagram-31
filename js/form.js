@@ -17,6 +17,7 @@ function openUploadOverlay () {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onEscKeydown);
+  uploadCancelElement.addEventListener('click', closeUploadOverlay);
 }
 
 function closeUploadOverlay () {
@@ -24,7 +25,7 @@ function closeUploadOverlay () {
   document.body.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onEscKeydown);
+  uploadCancelElement.removeEventListener('click', closeUploadOverlay);
 }
 
 uploadInputElement.addEventListener('change', openUploadOverlay);
-uploadCancelElement.addEventListener('click', closeUploadOverlay);
