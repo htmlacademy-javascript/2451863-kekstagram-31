@@ -59,4 +59,4 @@ const validateForm = (evt) => {
   pristine.validate();
 };
 
-export {validateForm};
+export {validateForm, uploadHashtagsInputElement, uploadDescriptionInputElement};

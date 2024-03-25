@@ -1,5 +1,5 @@
 import {isEscapeKey, openModal, closeModal} from './utils.js';
-import {validateForm} from './form-validation.js';
+import {validateForm, uploadHashtagsInputElement, uploadDescriptionInputElement} from './form-validation.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
@@ -7,7 +7,9 @@ const uploadInputElement = uploadFormElement.querySelector('.img-upload__input')
 const uploadCancelElement = uploadFormElement.querySelector('.img-upload__cancel');
 
 const onEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (document.activeElement === uploadHashtagsInputElement || document.activeElement === uploadDescriptionInputElement) {
+    evt.stopPropagation();
+  } else if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadOverlay();
   }
