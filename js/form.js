@@ -29,6 +29,8 @@ function closeUploadOverlay () {
   uploadCancelElement.removeEventListener('click', closeUploadOverlay);
 
   uploadFormElement.removeEventListener('submit', validateForm);
+
+  uploadFormElement.reset();
 }
 
 uploadInputElement.addEventListener('change', openUploadOverlay);

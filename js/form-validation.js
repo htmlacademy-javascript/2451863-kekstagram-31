@@ -12,11 +12,9 @@ const DESCRIPTION_VALIDATION_ERROR_MESSAGE = `Длина описания не �
 
 const HASHTAG_VALIDATION_ERROR_MESSAGES = {
   HASHTAG_INVALID: 'Недопустимые символы в хэштэге',
-  HASHTAH_NOT_UNIQUE: 'Хэштэг должен быть уникальным!',
+  HASHTAG_NOT_UNIQUE: 'Хэштэг должен быть уникальным!',
   HASHTAG_COUNT_INVALID: `Превышено допустимое число хэштэгов. Их может быть только ${HASHTAGS_COUNT_MAX}!`,
 };
-
-let hashtagValidationErrorMessage = '';
 
 const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
@@ -33,29 +31,27 @@ const checkHashtagCount = (hashtagsList) => hashtagsList.length <= HASHTAGS_COUN
 
 const validateHashtags = () => {
   const hashtagsList = uploadHashtagsInputElement.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
-  const isEveryHashtagValid = checkIndividualHashtag(hashtagsList);
-  const isEveryHashtagUnique = checkUniqueHashtag(hashtagsList);
-  const isHashtagCountValid = checkHashtagCount(hashtagsList);
 
-  if (!isEveryHashtagValid) {
-    hashtagValidationErrorMessage = HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_INVALID;
-    return false;
-  }
-  if (!isEveryHashtagUnique) {
-    hashtagValidationErrorMessage = HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAH_NOT_UNIQUE;
-    return false;
-  }
-  if (!isHashtagCountValid) {
-    hashtagValidationErrorMessage = HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_COUNT_INVALID;
-    return false;
-  }
+  return checkIndividualHashtag(hashtagsList) && checkUniqueHashtag(hashtagsList) && checkHashtagCount(hashtagsList);
+};
 
-  return true;
+const getHashtagValidationErrorMessage = () => {
+  const hashtagsList = uploadHashtagsInputElement.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
+
+  if (!checkIndividualHashtag(hashtagsList)) {
+    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_INVALID;
+  }
+  if (!checkUniqueHashtag(hashtagsList)) {
+    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_NOT_UNIQUE;
+  }
+  if (!checkHashtagCount(hashtagsList)) {
+    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_COUNT_INVALID;
+  }
 };
 
 const validateDescriptionLength = () => uploadDescriptionInputElement.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
 
-pristine.addValidator(uploadHashtagsInputElement, validateHashtags, hashtagValidationErrorMessage);
+pristine.addValidator(uploadHashtagsInputElement, validateHashtags, getHashtagValidationErrorMessage);
 pristine.addValidator(uploadDescriptionInputElement, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
 
 const validateForm = (evt) => {
