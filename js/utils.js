@@ -35,4 +35,14 @@ const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey};
+const openModal = (modal) => {
+  modal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+};
+
+const closeModal = (modal) => {
+  modal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
+
+export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal};

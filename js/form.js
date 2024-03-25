@@ -1,4 +1,5 @@
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey, openModal, closeModal} from './utils.js';
+import {validateForm} from './form-validation.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
@@ -13,19 +14,21 @@ const onEscKeydown = (evt) => {
 };
 
 function openUploadOverlay () {
-  uploadOverlayElement.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  openModal(uploadOverlayElement);
 
   document.addEventListener('keydown', onEscKeydown);
   uploadCancelElement.addEventListener('click', closeUploadOverlay);
+
+  uploadFormElement.addEventListener('submit', validateForm);
 }
 
 function closeUploadOverlay () {
-  uploadOverlayElement.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  closeModal(uploadOverlayElement);
 
   document.removeEventListener('keydown', onEscKeydown);
   uploadCancelElement.removeEventListener('click', closeUploadOverlay);
+
+  uploadFormElement.removeEventListener('submit', validateForm);
 }
 
 uploadInputElement.addEventListener('change', openUploadOverlay);

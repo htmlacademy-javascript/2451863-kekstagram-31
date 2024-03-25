@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey, openModal, closeModal} from './utils.js';
 
 const MIN_SHOWN_COMMENTS_COUNT = 5;
 
@@ -74,9 +74,17 @@ const onMiniatureClick = (miniature) => {
   openBigPicture();
 };
 
+function openBigPicture() {
+  openModal(bigPicture);
+
+  document.addEventListener('keydown', onEscKeydown);
+  bigPictureCancel.addEventListener('click', closeBigPicture);
+
+  commentLoadButton.addEventListener('click', renderBigPictureComments);
+}
+
 function closeBigPicture() {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
+  closeModal(bigPicture);
 
   document.removeEventListener('keydown', onEscKeydown);
   bigPictureCancel.removeEventListener('click', closeBigPicture);
@@ -85,14 +93,6 @@ function closeBigPicture() {
   removeDisplayedComments();
 }
 
-function openBigPicture() {
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
 
-  document.addEventListener('keydown', onEscKeydown);
-  bigPictureCancel.addEventListener('click', closeBigPicture);
-
-  commentLoadButton.addEventListener('click', renderBigPictureComments);
-}
 
 export {onMiniatureClick};
