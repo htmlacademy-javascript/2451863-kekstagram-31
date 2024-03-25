@@ -16,12 +16,7 @@ const HASHTAG_VALIDATION_ERROR_MESSAGES = {
   HASHTAG_COUNT_INVALID: `Превышено допустимое число хэштэгов. Их может быть только ${HASHTAGS_COUNT_MAX}!`,
 };
 
-const pristine = new Pristine(uploadFormElement, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-}, false);
+let pristine;
 
 const checkIndividualHashtag = (hashtagsList) => hashtagsList.every((hashtag) => hashtagRegexp.test(hashtag));
 
@@ -51,12 +46,25 @@ const getHashtagValidationErrorMessage = () => {
 
 const validateDescriptionLength = () => uploadDescriptionInputElement.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
 
-pristine.addValidator(uploadHashtagsInputElement, validateHashtags, getHashtagValidationErrorMessage);
-pristine.addValidator(uploadDescriptionInputElement, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
+const createPristineValidator = () => {
+  pristine = new Pristine(uploadFormElement, {
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper',
+    errorTextTag: 'div',
+  });
+
+  pristine.addValidator(uploadHashtagsInputElement, validateHashtags, getHashtagValidationErrorMessage);
+  pristine.addValidator(uploadDescriptionInputElement, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
+};
+
+const destroyPristineValidator = () => {
+  pristine.destroy();
+};
 
 const validateForm = (evt) => {
   evt.preventDefault();
   pristine.validate();
 };
 
-export {validateForm, uploadHashtagsInputElement, uploadDescriptionInputElement};
+export {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInputElement, uploadDescriptionInputElement};

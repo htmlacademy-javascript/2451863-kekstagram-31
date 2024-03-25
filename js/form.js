@@ -1,5 +1,5 @@
 import {isEscapeKey, openModal, closeModal} from './utils.js';
-import {validateForm, uploadHashtagsInputElement, uploadDescriptionInputElement} from './form-validation.js';
+import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInputElement, uploadDescriptionInputElement} from './form-validation.js';
 
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
@@ -21,6 +21,7 @@ function openUploadOverlay () {
   document.addEventListener('keydown', onEscKeydown);
   uploadCancelElement.addEventListener('click', closeUploadOverlay);
 
+  createPristineValidator();
   uploadFormElement.addEventListener('submit', validateForm);
 }
 
@@ -31,6 +32,7 @@ function closeUploadOverlay () {
   uploadCancelElement.removeEventListener('click', closeUploadOverlay);
 
   uploadFormElement.removeEventListener('submit', validateForm);
+  destroyPristineValidator();
 
   uploadFormElement.reset();
 }
