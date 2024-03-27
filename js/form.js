@@ -38,3 +38,5 @@ function closeUploadOverlay () {
 }
 
 uploadInput.addEventListener('change', openUploadOverlay);
+
+export {uploadForm};
