@@ -1,6 +1,7 @@
 import {isEscapeKey, openModal, closeModal} from './utils.js';
 import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
 import {createScaling, removeScaling} from './image-scaling.js';
+import {createFilterSlider, removeFilterSlider} from './filter-control.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -26,6 +27,7 @@ function openUploadOverlay () {
   uploadForm.addEventListener('submit', validateForm);
 
   createScaling();
+  createFilterSlider();
 }
 
 function closeUploadOverlay () {
@@ -40,6 +42,7 @@ function closeUploadOverlay () {
   uploadForm.reset();
 
   removeScaling();
+  removeFilterSlider();
 }
 
 uploadInput.addEventListener('change', openUploadOverlay);
