@@ -1,3 +1,3 @@
 import './gallery.js';
 import './form.js';
-import './image-scaling.js';
+//import './image-scaling.js';

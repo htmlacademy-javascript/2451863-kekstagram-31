@@ -1,5 +1,6 @@
 import {isEscapeKey, openModal, closeModal} from './utils.js';
 import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
+import {createScaling, removeScaling} from './image-scaling.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -23,6 +24,8 @@ function openUploadOverlay () {
 
   createPristineValidator();
   uploadForm.addEventListener('submit', validateForm);
+
+  createScaling();
 }
 
 function closeUploadOverlay () {
@@ -35,8 +38,8 @@ function closeUploadOverlay () {
   destroyPristineValidator();
 
   uploadForm.reset();
+
+  removeScaling();
 }
 
 uploadInput.addEventListener('change', openUploadOverlay);
-
-export {uploadForm};
