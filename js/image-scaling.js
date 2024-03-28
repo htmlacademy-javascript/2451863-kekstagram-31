@@ -15,35 +15,40 @@ const updateScaleControlValueDisplay = () => {
   uploadScaleControlValueDisplay.value = `${scaleValueCurrent * 100}%`;
 };
 
-const scaleImageBigger = () => {
+const updateImageScaleToCurrentValue = () => {
+  uploadFormImagePreview.style.transform = `scale(${scaleValueCurrent})`;
+};
+
+const updateImage = () => {
+  updateImageScaleToCurrentValue();
+  updateScaleControlValueDisplay();
+};
+
+const onScaleControlBiggerClick = () => {
   if (scaleValueCurrent < SCALE_MAX_VALUE) {
     scaleValueCurrent += SCALE_CHANGE_STEP;
-    uploadFormImagePreview.style.transform = `scale(${scaleValueCurrent})`;
-    updateScaleControlValueDisplay();
+    updateImage();
   }
 };
 
-const scaleImageSmaller = () => {
+const onScaleControlSmallerClick = () => {
   if (scaleValueCurrent > SCALE_MIN_VALUE) {
     scaleValueCurrent -= SCALE_CHANGE_STEP;
-    uploadFormImagePreview.style.transform = `scale(${scaleValueCurrent})`;
-    updateScaleControlValueDisplay();
+    updateImage();
   }
 };
 
-updateScaleControlValueDisplay();
-
 const createScaling = () => {
-  uploadScaleControlBigger.addEventListener('click', scaleImageBigger);
-  uploadScaleControlSmaller.addEventListener('click', scaleImageSmaller);
+  uploadScaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+  uploadScaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
 };
 
 const removeScaling = () => {
-  uploadScaleControlBigger.removeEventListener('click', scaleImageBigger);
-  uploadScaleControlSmaller.removeEventListener('click', scaleImageSmaller);
+  uploadScaleControlBigger.removeEventListener('click', onScaleControlBiggerClick);
+  uploadScaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
 
   scaleValueCurrent = SCALE_DEFAULT_VALUE;
-
+  updateImage();
 };
 
 export {createScaling, removeScaling};
