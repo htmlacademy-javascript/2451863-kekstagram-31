@@ -1,3 +1,5 @@
+const ERROR_MESSAGE_SHOW_TIME = 5000;
+
 const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -45,4 +47,16 @@ const closeModal = (modal) => {
   document.body.classList.remove('modal-open');
 };
 
-export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal};
+const showErrorMessage = (errorMessageText) => {
+  const errorMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+  const errorMessage = errorMessageTemplate.cloneNode(true);
+  const errorMessageTitle = errorMessage.querySelector('.data-error__title');
+  errorMessageTitle.textContent = errorMessageText;
+  document.body.append(errorMessage);
+
+  setTimeout(() => {
+    errorMessage.remove();
+  }, ERROR_MESSAGE_SHOW_TIME);
+};
+
+export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal, showErrorMessage};

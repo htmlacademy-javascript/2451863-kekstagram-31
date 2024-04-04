@@ -2,7 +2,7 @@ const miniatureTemplate = document.querySelector('#picture').content.querySelect
 const miniaturesFragment = document.createDocumentFragment();
 const miniaturesSection = document.querySelector('.pictures');
 
-const renderMiniatures = (miniatures, renderTarget) => {
+const renderMiniatures = (miniatures) => {
   miniatures.forEach(({id, url, description, likes, comments}) => {
     const newMiniature = miniatureTemplate.cloneNode(true);
 
@@ -15,7 +15,7 @@ const renderMiniatures = (miniatures, renderTarget) => {
     miniaturesFragment.appendChild(newMiniature);
   });
 
-  renderTarget.appendChild(miniaturesFragment);
+  miniaturesSection.appendChild(miniaturesFragment);
 };
 
 export {renderMiniatures, miniaturesSection};
