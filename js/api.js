@@ -7,19 +7,25 @@ const ROUTE = {
 
 const ERROR_MESSAGE = {
   GET_DATA: 'Не удалось загрузить данные',
+  SEND_DATA: 'Не удалось отправить данные',
 };
 
-const getData = () => fetch(
-  `${BASE_URL}${ROUTE.GET_DATA}`)
-  .then((response) => {
-    if(response.ok) {
+const SUCCESS_MESSAGE = 'Изображение успешно загружено';
+
+const load = (route, errorMessage, method = 'GET', body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
       return response.json();
-    }
+    })
+    .catch(() => {
+      throw new Error(errorMessage);
+    });
 
-    throw new Error();
-  })
-  .catch(() => {
-    throw new Error(ERROR_MESSAGE.GET_DATA);
-  });
+const getData = () => load(ROUTE.GET_DATA, ERROR_MESSAGE.GET_DATA);
 
-export {getData, ERROR_MESSAGE};
+const sendData = (body) => load (ROUTE.SEND_DATA, ERROR_MESSAGE.SEND_DATA, 'POST', body);
+
+export {getData, sendData, ERROR_MESSAGE, SUCCESS_MESSAGE};

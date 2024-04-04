@@ -59,4 +59,18 @@ const showErrorMessage = (errorMessageText) => {
   }, ERROR_MESSAGE_SHOW_TIME);
 };
 
-export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal, showErrorMessage};
+const showSuccessMessage = (successMessageText) => {
+  const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  const successMessage = successMessageTemplate.cloneNode(true);
+  const successMessageTitle = successMessage.querySelector('.success__title');
+  const successMessageButton = successMessage.querySelector('.success__button');
+
+  successMessageTitle.textContent = successMessageText;
+  document.body.append(successMessage);
+
+  successMessageButton.addEventListener('click', () => {
+    successMessage.remove();
+  });
+};
+
+export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal, showErrorMessage, showSuccessMessage};

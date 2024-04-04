@@ -62,9 +62,6 @@ const destroyPristineValidator = () => {
   pristine.destroy();
 };
 
-const validateForm = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-};
+const validateForm = () => pristine.validate();
 
 export {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput};
