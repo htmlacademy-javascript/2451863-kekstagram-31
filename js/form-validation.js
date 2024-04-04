@@ -25,9 +25,14 @@ const checkUniqueHashtag = (hashtagsList) => hashtagsList.every((value, index, a
 const checkHashtagCount = (hashtagsList) => hashtagsList.length <= HASHTAGS_COUNT_MAX;
 
 const validateHashtags = () => {
-  const hashtagsList = uploadHashtagsInput.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
+  const hashtagsList = uploadHashtagsInput
+    .value
+    .trim()
+    .split(' ')
+    .map((hashtag) => hashtag.toLowerCase())
+    .filter((hashtag) => hashtag);
 
-  return checkIndividualHashtag(hashtagsList) && checkUniqueHashtag(hashtagsList) && checkHashtagCount(hashtagsList);
+  return hashtagsList.length === 0 || checkIndividualHashtag(hashtagsList) && checkUniqueHashtag(hashtagsList) && checkHashtagCount(hashtagsList);
 };
 
 const getHashtagValidationErrorMessage = () => {
