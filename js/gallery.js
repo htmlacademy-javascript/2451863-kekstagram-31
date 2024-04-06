@@ -1,6 +1,6 @@
 import {renderMiniatures, miniaturesSection} from './render-miniatures.js';
 import {onMiniatureClick} from './full-image.js';
-import {getData, ERROR_MESSAGE} from './api.js';
+import {getData, ErrorMessage} from './api.js';
 import {showErrorMessage} from './utils.js';
 
 getData()
@@ -15,5 +15,5 @@ getData()
     });
   })
   .catch(() => {
-    showErrorMessage(ERROR_MESSAGE.GET_DATA);
+    showErrorMessage(ErrorMessage.GET_DATA);
   });
