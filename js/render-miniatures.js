@@ -1,9 +1,23 @@
+import {getSortingMode, sortMiniatures} from './sorting.js';
+
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('a');
 const miniaturesFragment = document.createDocumentFragment();
 const miniaturesSection = document.querySelector('.pictures');
 
+const clearMiniatures = () => {
+  miniaturesSection.querySelectorAll('.picture').forEach((elem) => {
+    elem.remove();
+  });
+};
+
 const renderMiniatures = (miniatures) => {
-  miniatures.forEach(({id, url, description, likes, comments}) => {
+  clearMiniatures();
+
+  const sortingMode = getSortingMode();
+
+  const miniaturesToRender = sortMiniatures(miniatures, sortingMode);
+
+  miniaturesToRender.forEach(({id, url, description, likes, comments}) => {
     const newMiniature = miniatureTemplate.cloneNode(true);
 
     newMiniature.querySelector('img').id = id;
@@ -18,4 +32,4 @@ const renderMiniatures = (miniatures) => {
   miniaturesSection.appendChild(miniaturesFragment);
 };
 
-export {renderMiniatures, miniaturesSection};
+export {renderMiniatures};

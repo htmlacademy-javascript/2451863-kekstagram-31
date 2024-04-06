@@ -1,7 +1,10 @@
-import {renderMiniatures, miniaturesSection} from './render-miniatures.js';
+import {renderMiniatures} from './render-miniatures.js';
 import {onMiniatureClick} from './full-image.js';
 import {getData, ErrorMessage} from './api.js';
 import {showErrorMessage} from './utils.js';
+import {setMiniatureSorting} from './sorting.js';
+
+const miniaturesSection = document.querySelector('.pictures');
 
 getData()
   .then((pictures) => {
@@ -13,6 +16,8 @@ getData()
         onMiniatureClick(miniature);
       }
     });
+
+    setMiniatureSorting(() => renderMiniatures(pictures));
   })
   .catch(() => {
     showErrorMessage(ErrorMessage.GET_DATA);

@@ -28,4 +28,4 @@ const getData = () => load(Route.GET_DATA, ErrorMessage.GET_DATA);
 
 const sendData = (body) => load (Route.SEND_DATA, ErrorMessage.SEND_DATA, 'POST', body);
 
-export {getData, sendData, ErrorMessage, SUCCESS_MESSAGE};
+export {getData, sendData, ErrorMessage, SuccessMessage};
