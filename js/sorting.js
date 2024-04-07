@@ -1,25 +1,14 @@
-import {getUniqueIntegerFromRange} from './utils.js';
+import {debounce, getUniqueIntegerFromRange} from './utils.js';
+import {renderMiniatures, clearMiniatures} from './render-miniatures.js';
 
-const miniatureSorting = document.querySelector('.img-filters');
+const sortingButtonsContainer = document.querySelector('.img-filters');
 
 const RANDOM_PICTURE_COUNT = 10;
 
-const Sort = {
+const SORT = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
-};
-
-const setMiniatureSorting = (cb) => {
-  miniatureSorting.classList.remove('img-filters--inactive');
-
-  miniatureSorting.addEventListener('click', (evt) =>{
-    if (evt.target.closest('.img-filters__button')) {
-      miniatureSorting.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-      evt.target.classList.add('img-filters__button--active');
-    }
-    cb();
-  });
 };
 
 const sortDiscussed = (miniatures) => miniatures.slice().sort((miniatureA, miniatureB) => miniatureB.comments.length - miniatureA.comments.length);
@@ -38,15 +27,28 @@ const sortRandom = (miniatures) => {
 
 const sortMiniatures = (miniatures, sortingMode) => {
   switch(sortingMode) {
-    case Sort.DEFAULT:
+    case SORT.DEFAULT:
       return miniatures;
-    case Sort.DISCUSSED:
+    case SORT.DISCUSSED:
       return sortDiscussed(miniatures);
-    case Sort.RANDOM:
+    case SORT.RANDOM:
       return sortRandom(miniatures);
   }
 };
 
-const getSortingMode = () => miniatureSorting.querySelector('.img-filters__button--active').id;
+const getSortingMode = () => sortingButtonsContainer.querySelector('.img-filters__button--active').id;
 
-export {setMiniatureSorting, getSortingMode, sortMiniatures};
+const setMiniatureSorting = (miniatures) => {
+  sortingButtonsContainer.classList.remove('img-filters--inactive');
+
+  sortingButtonsContainer.addEventListener('click', debounce((evt) =>{
+    if (evt.target.closest('.img-filters__button')) {
+      sortingButtonsContainer.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+      evt.target.classList.add('img-filters__button--active');
+      clearMiniatures();
+      renderMiniatures(sortMiniatures(miniatures, getSortingMode()));
+    }
+  }));
+};
+
+export {setMiniatureSorting};

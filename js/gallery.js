@@ -1,6 +1,6 @@
 import {renderMiniatures} from './render-miniatures.js';
 import {onMiniatureClick} from './full-image.js';
-import {getData, ErrorMessage} from './api.js';
+import {getData, ERROR_MESSAGE} from './api.js';
 import {showErrorMessage} from './utils.js';
 import {setMiniatureSorting} from './sorting.js';
 
@@ -17,8 +17,8 @@ getData()
       }
     });
 
-    setMiniatureSorting(() => renderMiniatures(pictures));
+    setMiniatureSorting(pictures);
   })
   .catch(() => {
-    showErrorMessage(ErrorMessage.GET_DATA);
+    showErrorMessage(ERROR_MESSAGE.GET_DATA);
   });

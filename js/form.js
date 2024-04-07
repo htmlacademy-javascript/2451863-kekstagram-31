@@ -2,7 +2,7 @@ import {isEscapeKey, openModal, closeModal, showErrorMessage, showSuccessMessage
 import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
 import {createScaling, removeScaling} from './image-scaling.js';
 import {createFilterSlider, removeFilterSlider} from './filter-control.js';
-import {sendData, ErrorMessage, SuccessMessage} from './api.js';
+import {sendData, ERROR_MESSAGE, SUCCESS_MESSAGE} from './api.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -63,7 +63,7 @@ function onFormSubmit (evt) {
     sendData(new FormData(evt.target))
       .then(submitForm)
       .catch(() => {
-        showErrorMessage(ErrorMessage.SEND_DATA);
+        showErrorMessage(ERROR_MESSAGE.SEND_DATA);
       })
       .finally(unblockSubmit());
   }
@@ -71,7 +71,7 @@ function onFormSubmit (evt) {
 
 function submitForm () {
   closeUploadOverlay();
-  showSuccessMessage(SuccessMessage);
+  showSuccessMessage(SUCCESS_MESSAGE);
 }
 
 uploadInput.addEventListener('change', openUploadOverlay);
