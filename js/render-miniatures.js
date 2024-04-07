@@ -2,7 +2,16 @@ const miniatureTemplate = document.querySelector('#picture').content.querySelect
 const miniaturesFragment = document.createDocumentFragment();
 const miniaturesSection = document.querySelector('.pictures');
 
+const clearMiniatures = () => {
+  miniaturesSection.querySelectorAll('.picture').forEach((elem) => {
+    elem.remove();
+  });
+};
+
 const renderMiniatures = (miniatures) => {
+  //clearMiniatures();
+  //const sortingMode = getSortingMode();
+  //const miniaturesToRender = sortMiniatures(miniatures, sortingMode);
   miniatures.forEach(({id, url, description, likes, comments}) => {
     const newMiniature = miniatureTemplate.cloneNode(true);
 
@@ -18,4 +27,4 @@ const renderMiniatures = (miniatures) => {
   miniaturesSection.appendChild(miniaturesFragment);
 };
 
-export {renderMiniatures, miniaturesSection};
+export {renderMiniatures, clearMiniatures};
