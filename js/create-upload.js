@@ -1,4 +1,4 @@
-import {isEscapeKey, openModal, closeModal, showErrorMessage, showSuccessMessage} from './utils.js';
+import {isEscapeKey, openModal, closeModal, showErrorMessage, showSuccessMessage, setElementDisabledAttribute} from './utils.js';
 import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
 import {createScaling, removeScaling} from './image-scaling.js';
 import {createFilterSlider, removeFilterSlider} from './filter-control.js';
@@ -9,6 +9,11 @@ const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const uploadInput = uploadForm.querySelector('.img-upload__input');
 const uploadCancel = uploadForm.querySelector('.img-upload__cancel');
 const uploadSubmit = uploadForm.querySelector('.img-upload__submit');
+const uploadPreview = document.querySelector('.img-upload__preview img');
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const DEFAULT_PREVIEW_SRC = 'img/upload-default-image.jpg';
 
 const onEscKeydown = (evt) => {
   if (document.activeElement === uploadHashtagsInput || document.activeElement === uploadDescriptionInput) {
@@ -20,16 +25,23 @@ const onEscKeydown = (evt) => {
 };
 
 function openUploadOverlay () {
-  openModal(uploadOverlay);
+  const file = uploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const typeCheck = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-  document.addEventListener('keydown', onEscKeydown);
-  uploadCancel.addEventListener('click', closeUploadOverlay);
+  if (typeCheck) {
+    uploadPreview.src = URL.createObjectURL(file);
+    openModal(uploadOverlay);
 
-  createPristineValidator();
-  uploadForm.addEventListener('submit', onFormSubmit);
+    document.addEventListener('keydown', onEscKeydown);
+    uploadCancel.addEventListener('click', closeUploadOverlay);
 
-  createScaling();
-  createFilterSlider();
+    createPristineValidator();
+    uploadForm.addEventListener('submit', onFormSubmit);
+
+    createScaling();
+    createFilterSlider();
+  }
 }
 
 function closeUploadOverlay () {
@@ -45,27 +57,21 @@ function closeUploadOverlay () {
 
   removeScaling();
   removeFilterSlider();
+
+  uploadPreview.src = DEFAULT_PREVIEW_SRC;
 }
-
-const blockSubmit = () => {
-  uploadSubmit.disabled = true;
-};
-
-const unblockSubmit = () => {
-  uploadSubmit.disabled = false;
-};
 
 function onFormSubmit (evt) {
   evt.preventDefault();
 
   if (validateForm()){
-    blockSubmit();
+    setElementDisabledAttribute(uploadSubmit, true);
     sendData(new FormData(evt.target))
       .then(submitForm)
       .catch(() => {
         showErrorMessage(ERROR_MESSAGE.SEND_DATA);
       })
-      .finally(unblockSubmit());
+      .finally(setElementDisabledAttribute(uploadSubmit, false));
   }
 }
 
@@ -74,4 +80,8 @@ function submitForm () {
   showSuccessMessage(SUCCESS_MESSAGE);
 }
 
-uploadInput.addEventListener('change', openUploadOverlay);
+const createUpload = () => {
+  uploadInput.addEventListener('change', openUploadOverlay);
+};
+
+export {createUpload};
