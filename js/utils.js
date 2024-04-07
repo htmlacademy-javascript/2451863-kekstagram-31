@@ -24,17 +24,6 @@ const getUniqueIntegerFromRange = (min, max) => {
   };
 };
 
-const getUniqueInteger = () => {
-  let integer = 0;
-
-  return function () {
-    integer++;
-    return integer;
-  };
-};
-
-const getRandomArrayItem = (array) => array[getRandomInteger(0, array.length - 1)];
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const openModal = (modal) => {
@@ -73,7 +62,7 @@ const showSuccessMessage = (successMessageText) => {
   });
 };
 
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = 250) => {
   let timeoutId;
 
   return (...rest) => {
@@ -83,4 +72,8 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomInteger, getUniqueIntegerFromRange, getUniqueInteger, getRandomArrayItem, isEscapeKey, openModal, closeModal, showErrorMessage, showSuccessMessage, debounce};
+const setElementDisabledAttribute = (element, value) => {
+  element.disabled = value;
+};
+
+export {debounce, closeModal, openModal, isEscapeKey, getUniqueIntegerFromRange, showErrorMessage, showSuccessMessage, setElementDisabledAttribute};
