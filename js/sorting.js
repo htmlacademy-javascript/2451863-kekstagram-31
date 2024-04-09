@@ -38,17 +38,19 @@ const sortMiniatures = (miniatures, sortingMode) => {
 
 const getSortingMode = () => sortingButtonsContainer.querySelector('.img-filters__button--active').id;
 
+const debounceWrapper = debounce(renderMiniatures);
+
 const setMiniatureSorting = (miniatures) => {
   sortingButtonsContainer.classList.remove('img-filters--inactive');
 
-  sortingButtonsContainer.addEventListener('click', debounce((evt) =>{
+  sortingButtonsContainer.addEventListener('click', (evt) => {
     if (evt.target.closest('.img-filters__button')) {
       sortingButtonsContainer.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
       clearMiniatures();
-      renderMiniatures(sortMiniatures(miniatures, getSortingMode()));
+      debounceWrapper(sortMiniatures(miniatures, getSortingMode()));
     }
-  }));
+  });
 };
 
 export {setMiniatureSorting};

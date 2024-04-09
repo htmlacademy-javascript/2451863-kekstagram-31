@@ -62,7 +62,7 @@ const showSuccessMessage = (successMessageText) => {
   });
 };
 
-const debounce = (callback, timeoutDelay = 250) => {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
   return (...rest) => {

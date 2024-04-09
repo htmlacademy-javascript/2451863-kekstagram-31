@@ -108,7 +108,7 @@ const showSlider = () => {
   uploadFilterSliderContainer.classList.remove('hidden');
 };
 
-const onFilterClick = (evt) => {
+const onFilterChange = (evt) => {
   evt.preventDefault();
   selectedFilterType = evt.target.closest('.effects__item').querySelector('input').id;
 
@@ -139,7 +139,7 @@ const createFilterSlider = () => {
     applyFilterEffect();
   });
 
-  uploadFilters.addEventListener('click', onFilterClick);
+  uploadFilters.addEventListener('change', onFilterChange);
 };
 
 const removeFilterSlider = () => {

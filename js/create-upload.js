@@ -9,7 +9,8 @@ const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 const uploadInput = uploadForm.querySelector('.img-upload__input');
 const uploadCancel = uploadForm.querySelector('.img-upload__cancel');
 const uploadSubmit = uploadForm.querySelector('.img-upload__submit');
-const uploadPreview = document.querySelector('.img-upload__preview img');
+const uploadPreview = uploadForm.querySelector('.img-upload__preview img');
+const uploadEffectsPreview = uploadForm.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -30,7 +31,14 @@ function openUploadOverlay () {
   const typeCheck = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (typeCheck) {
-    uploadPreview.src = URL.createObjectURL(file);
+    const currentUploadImageSrc = URL.createObjectURL(file);
+
+    uploadPreview.src = currentUploadImageSrc;
+
+    uploadEffectsPreview.forEach((item) => {
+      item.style.backgroundImage = `url(${currentUploadImageSrc})`;
+    });
+
     openModal(uploadOverlay);
 
     document.addEventListener('keydown', onEscKeydown);
