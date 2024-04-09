@@ -35,6 +35,7 @@ const renderComment = (commentData) => {
 
   comment.id = commentData.id;
   comment.querySelector('.social__picture').src = commentData.avatar;
+  comment.querySelector('.social__picture').alt = commentData.name;
   comment.querySelector('.social__text').textContent = commentData.message;
 
   commentSection.appendChild(comment);
