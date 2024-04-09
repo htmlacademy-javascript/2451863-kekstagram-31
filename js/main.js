@@ -19,8 +19,9 @@ getData()
     });
 
     setMiniatureSorting(pictures);
-    createUpload();
   })
   .catch(() => {
     showErrorMessage(ERROR_MESSAGE.GET_DATA);
   });
+
+createUpload();
