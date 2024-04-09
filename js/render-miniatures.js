@@ -9,9 +9,6 @@ const clearMiniatures = () => {
 };
 
 const renderMiniatures = (miniatures) => {
-  //clearMiniatures();
-  //const sortingMode = getSortingMode();
-  //const miniaturesToRender = sortMiniatures(miniatures, sortingMode);
   miniatures.forEach(({id, url, description, likes, comments}) => {
     const newMiniature = miniatureTemplate.cloneNode(true);
 
