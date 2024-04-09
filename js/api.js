@@ -2,12 +2,12 @@ const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 const ERROR_MESSAGE_SHOW_TIME = 5000;
 
-const ROUTE = {
+const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
 };
 
-const ERROR_MESSAGE = {
+const ErrorMessage = {
   GET_DATA: 'Не удалось загрузить данные',
   SEND_DATA: 'Не удалось отправить данные',
 };
@@ -36,8 +36,8 @@ const load = (route, errorMessage, method = 'GET', body = null) =>
       throw new Error(errorMessage);
     });
 
-const getData = () => load(ROUTE.GET_DATA, ERROR_MESSAGE.GET_DATA);
+const getData = () => load(Route.GET_DATA, ErrorMessage.GET_DATA);
 
-const sendData = (body) => load (ROUTE.SEND_DATA, ERROR_MESSAGE.SEND_DATA, 'POST', body);
+const sendData = (body) => load (Route.SEND_DATA, ErrorMessage.SEND_DATA, 'POST', body);
 
-export {getData, sendData, showGetDataErrorMessage, ERROR_MESSAGE};
+export {getData, sendData, showGetDataErrorMessage, ErrorMessage};
