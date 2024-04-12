@@ -10,7 +10,7 @@ const bigPictureImage = bigPicture.querySelector('.big-picture__img').querySelec
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureCaption = bigPicture.querySelector('.social__caption');
 
-const commentTemplate = bigPicture.querySelector('#comment').content.querySelector('li');
+const commentTemplate = document.querySelector('#comment').content.querySelector('li');
 const commentSection = bigPicture.querySelector('.social__comments');
 const commentsTotalCountDisplay = bigPicture.querySelector('.social__comment-total-count');
 const commentsShownCountDisplay = bigPicture.querySelector('.social__comment-shown-count');

@@ -12,7 +12,7 @@ const SCALE_CHANGE_STEP = 0.25;
 let scaleValueCurrent = SCALE_DEFAULT_VALUE;
 
 const updateScaleControlValueDisplay = () => {
-  uploadScaleControlValueDisplay.value = `${scaleValueCurrent * 100}%`;
+  uploadScaleControlValueDisplay.setAttribute('value', `${scaleValueCurrent * 100}%`);
 };
 
 const updateImageScaleToCurrentValue = () => {

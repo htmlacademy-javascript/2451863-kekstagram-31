@@ -135,7 +135,7 @@ const createFilterSlider = () => {
   hideSlider();
 
   uploadFilterSlider.noUiSlider.on('update', () => {
-    uploadFilterValue.value = uploadFilterSlider.noUiSlider.get();
+    uploadFilterValue.setAttribute('value', uploadFilterSlider.noUiSlider.get());
     applyFilterEffect();
   });
 

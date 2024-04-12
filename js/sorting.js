@@ -17,12 +17,12 @@ const sortRandom = (miniatures) => {
   const getMiniatureKey = getUniqueIntegerFromRange(0, miniatures.length - 1);
   const uniqueMiniatureKeys = Array.from({length: RANDOM_PICTURE_COUNT}, getMiniatureKey);
 
-  const randomMiniatureList = [];
+  const randomMiniatures = [];
   uniqueMiniatureKeys.forEach((key) => {
-    randomMiniatureList.push(miniatures[key]);
+    randomMiniatures.push(miniatures[key]);
   });
 
-  return randomMiniatureList;
+  return randomMiniatures;
 };
 
 const sortMiniatures = (miniatures, sortingMode) => {
@@ -38,7 +38,10 @@ const sortMiniatures = (miniatures, sortingMode) => {
 
 const getSortingMode = () => sortingButtonsContainer.querySelector('.img-filters__button--active').id;
 
-const debounceWrapper = debounce(renderMiniatures);
+const debounceMiniaturesRender = debounce((miniatures) => {
+  clearMiniatures();
+  renderMiniatures(miniatures);
+});
 
 const setMiniatureSorting = (miniatures) => {
   sortingButtonsContainer.classList.remove('img-filters--inactive');
@@ -47,8 +50,8 @@ const setMiniatureSorting = (miniatures) => {
     if (evt.target.closest('.img-filters__button')) {
       sortingButtonsContainer.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
-      clearMiniatures();
-      debounceWrapper(sortMiniatures(miniatures, getSortingMode()));
+
+      debounceMiniaturesRender(sortMiniatures(miniatures, getSortingMode()));
     }
   });
 };

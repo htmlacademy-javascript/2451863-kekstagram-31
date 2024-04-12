@@ -28,6 +28,28 @@ const onEscKeydown = (evt) => {
   }
 };
 
+const submitForm = () => {
+  closeUploadOverlay();
+  showImageUploadSuccessMessage();
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  if (validateForm()) {
+    setElementDisabledAttribute(uploadSubmit, true);
+
+    sendData(new FormData(evt.target))
+      .then(submitForm)
+      .catch(() => {
+        showImageUploadErrorMessage();
+      })
+      .finally(() => {
+        setElementDisabledAttribute(uploadSubmit, false);
+      });
+  }
+};
+
 function openUploadOverlay () {
   const file = uploadInput.files[0];
   const fileName = file.name.toLowerCase();
@@ -70,25 +92,6 @@ function closeUploadOverlay () {
   removeFilterSlider();
 
   uploadPreview.src = DEFAULT_PREVIEW_SRC;
-}
-
-function onFormSubmit (evt) {
-  evt.preventDefault();
-
-  if (validateForm()){
-    setElementDisabledAttribute(uploadSubmit, true);
-    sendData(new FormData(evt.target))
-      .then(submitForm)
-      .catch(() => {
-        showImageUploadErrorMessage();
-      })
-      .finally(setElementDisabledAttribute(uploadSubmit, false));
-  }
-}
-
-function submitForm () {
-  closeUploadOverlay();
-  showImageUploadSuccessMessage();
 }
 
 const createUpload = () => {
