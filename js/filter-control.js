@@ -1,11 +1,4 @@
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadFilters = uploadOverlay.querySelector('.img-upload__effects');
-const uploadFilterValue = uploadOverlay.querySelector('.effect-level__value');
-const uploadFilterSlider = uploadOverlay.querySelector('.effect-level__slider');
-const uploadFilterSliderContainer = uploadOverlay.querySelector('.img-upload__effect-level');
-const uploadFormImagePreview = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
-
-const filterType = {
+const FilterType = {
   EFFECT_NONE: 'effect-none',
   EFFECT_CHROME: 'effect-chrome',
   EFFECT_SEPIA: 'effect-sepia',
@@ -14,7 +7,7 @@ const filterType = {
   EFFECT_HEAT: 'effect-heat',
 };
 
-const filterOptions = {
+const FilterOptions = {
   'effect-chrome': {
     min: 0,
     max: 1,
@@ -42,33 +35,40 @@ const filterOptions = {
   },
 };
 
-let selectedFilterType = filterType.EFFECT_NONE;
+const uploadOverlayElement = document.querySelector('.img-upload__overlay');
+const uploadFiltersElement = uploadOverlayElement.querySelector('.img-upload__effects');
+const uploadFilterValueElement = uploadOverlayElement.querySelector('.effect-level__value');
+const uploadFilterSliderContainerElement = uploadOverlayElement.querySelector('.img-upload__effect-level');
+const uploadFilterSliderElement = uploadOverlayElement.querySelector('.effect-level__slider');
+const uploadFormImagePreviewElement = uploadOverlayElement.querySelector('.img-upload__preview').querySelector('img');
+
+let selectedFilterType = FilterType.EFFECT_NONE;
 
 const setFilterNone = () => {
-  uploadFormImagePreview.style.filter = null;
+  uploadFormImagePreviewElement.style.filter = null;
 };
 
 const setFilterChrome = () => {
-  uploadFormImagePreview.style.filter = `grayscale(${uploadFilterValue.value})`;
+  uploadFormImagePreviewElement.style.filter = `grayscale(${uploadFilterValueElement.value})`;
 };
 
 const setFilterSepia = () => {
-  uploadFormImagePreview.style.filter = `sepia(${uploadFilterValue.value})`;
+  uploadFormImagePreviewElement.style.filter = `sepia(${uploadFilterValueElement.value})`;
 };
 
 const setFilterMarvin = () => {
-  uploadFormImagePreview.style.filter = `invert(${uploadFilterValue.value}%)`;
+  uploadFormImagePreviewElement.style.filter = `invert(${uploadFilterValueElement.value}%)`;
 };
 
 const setFilterPhobos = () => {
-  uploadFormImagePreview.style.filter = `blur(${uploadFilterValue.value}px)`;
+  uploadFormImagePreviewElement.style.filter = `blur(${uploadFilterValueElement.value}px)`;
 };
 
 const setFilterHeat = () => {
-  uploadFormImagePreview.style.filter = `brightness(${uploadFilterValue.value})`;
+  uploadFormImagePreviewElement.style.filter = `brightness(${uploadFilterValueElement.value})`;
 };
 
-const filterEffects = {
+const FilterEffects = {
   'effect-none': setFilterNone,
   'effect-chrome': setFilterChrome,
   'effect-sepia': setFilterSepia,
@@ -78,11 +78,11 @@ const filterEffects = {
 };
 
 const applyFilterEffect = () => {
-  filterEffects[selectedFilterType]();
+  FilterEffects[selectedFilterType]();
 };
 
 const updateSliderOptions = (selectedFilterOptions) => {
-  uploadFilterSlider.noUiSlider.updateOptions({
+  uploadFilterSliderElement.noUiSlider.updateOptions({
     range: {
       min: selectedFilterOptions.min,
       max: selectedFilterOptions.max
@@ -101,28 +101,28 @@ const updateSliderOptions = (selectedFilterOptions) => {
 };
 
 const hideSlider = () => {
-  uploadFilterSliderContainer.classList.add('hidden');
+  uploadFilterSliderContainerElement.classList.add('hidden');
 };
 
 const showSlider = () => {
-  uploadFilterSliderContainer.classList.remove('hidden');
+  uploadFilterSliderContainerElement.classList.remove('hidden');
 };
 
 const onFilterChange = (evt) => {
   evt.preventDefault();
   selectedFilterType = evt.target.closest('.effects__item').querySelector('input').id;
 
-  if (selectedFilterType === filterType.EFFECT_NONE) {
+  if (selectedFilterType === FilterType.EFFECT_NONE) {
     hideSlider();
     applyFilterEffect();
   } else {
     showSlider();
-    updateSliderOptions(filterOptions[selectedFilterType]);
+    updateSliderOptions(FilterOptions[selectedFilterType]);
   }
 };
 
 const createFilterSlider = () => {
-  noUiSlider.create(uploadFilterSlider, {
+  noUiSlider.create(uploadFilterSliderElement, {
     range: {
       min: 0,
       max: 1
@@ -134,16 +134,16 @@ const createFilterSlider = () => {
 
   hideSlider();
 
-  uploadFilterSlider.noUiSlider.on('update', () => {
-    uploadFilterValue.setAttribute('value', uploadFilterSlider.noUiSlider.get());
+  uploadFilterSliderElement.noUiSlider.on('update', () => {
+    uploadFilterValueElement.setAttribute('value', uploadFilterSliderElement.noUiSlider.get());
     applyFilterEffect();
   });
 
-  uploadFilters.addEventListener('change', onFilterChange);
+  uploadFiltersElement.addEventListener('change', onFilterChange);
 };
 
 const removeFilterSlider = () => {
-  uploadFilterSlider.noUiSlider.destroy();
+  uploadFilterSliderElement.noUiSlider.destroy();
 };
 
 export {createFilterSlider, removeFilterSlider};

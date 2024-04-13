@@ -1,22 +1,22 @@
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadScaleControlSmaller = uploadOverlay.querySelector('.scale__control--smaller');
-const uploadScaleControlBigger = uploadOverlay.querySelector('.scale__control--bigger');
-const uploadScaleControlValueDisplay = uploadOverlay.querySelector('.scale__control--value');
-const uploadFormImagePreview = uploadOverlay.querySelector('.img-upload__preview').querySelector('img');
-
 const SCALE_MAX_VALUE = 1;
 const SCALE_DEFAULT_VALUE = SCALE_MAX_VALUE;
 const SCALE_MIN_VALUE = 0.25;
 const SCALE_CHANGE_STEP = 0.25;
 
+const uploadOverlayElement = document.querySelector('.img-upload__overlay');
+const uploadScaleControlSmallerElement = uploadOverlayElement.querySelector('.scale__control--smaller');
+const uploadScaleControlBiggerElement = uploadOverlayElement.querySelector('.scale__control--bigger');
+const uploadScaleControlValueElement = uploadOverlayElement.querySelector('.scale__control--value');
+const uploadFormImagePreviewElement = uploadOverlayElement.querySelector('.img-upload__preview').querySelector('img');
+
 let scaleValueCurrent = SCALE_DEFAULT_VALUE;
 
 const updateScaleControlValueDisplay = () => {
-  uploadScaleControlValueDisplay.setAttribute('value', `${scaleValueCurrent * 100}%`);
+  uploadScaleControlValueElement.setAttribute('value', `${scaleValueCurrent * 100}%`);
 };
 
 const updateImageScaleToCurrentValue = () => {
-  uploadFormImagePreview.style.transform = `scale(${scaleValueCurrent})`;
+  uploadFormImagePreviewElement.style.transform = `scale(${scaleValueCurrent})`;
 };
 
 const updateImage = () => {
@@ -39,13 +39,13 @@ const onScaleControlSmallerClick = () => {
 };
 
 const createScaling = () => {
-  uploadScaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
-  uploadScaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  uploadScaleControlBiggerElement.addEventListener('click', onScaleControlBiggerClick);
+  uploadScaleControlSmallerElement.addEventListener('click', onScaleControlSmallerClick);
 };
 
 const removeScaling = () => {
-  uploadScaleControlBigger.removeEventListener('click', onScaleControlBiggerClick);
-  uploadScaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  uploadScaleControlBiggerElement.removeEventListener('click', onScaleControlBiggerClick);
+  uploadScaleControlSmallerElement.removeEventListener('click', onScaleControlSmallerClick);
 
   scaleValueCurrent = SCALE_DEFAULT_VALUE;
   updateImage();

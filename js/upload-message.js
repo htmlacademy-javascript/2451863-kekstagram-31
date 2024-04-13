@@ -1,14 +1,14 @@
 import {isEscapeKey} from './utils.js';
 
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-const errorMessage = errorMessageTemplate.cloneNode(true);
-const errorMessageButton = errorMessage.querySelector('.error__button');
-const errorMessageInner = errorMessage.querySelector('.error__inner');
+const errorMessageTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const errorMessageElement = errorMessageTemplateElement.cloneNode(true);
+const errorMessageButtonElement = errorMessageElement.querySelector('.error__button');
+const errorMessageInnerElement = errorMessageElement.querySelector('.error__inner');
 
-const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const successMessage = successMessageTemplate.cloneNode(true);
-const successMessageButton = successMessage.querySelector('.success__button');
-const successMessageInner = successMessage.querySelector('.success__inner');
+const successMessageTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const successMessageElement = successMessageTemplateElement.cloneNode(true);
+const successMessageButtonElement = successMessageElement.querySelector('.success__button');
+const successMessageInnerElement = successMessageElement.querySelector('.success__inner');
 
 const onErrorEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -18,17 +18,17 @@ const onErrorEscKeydown = (evt) => {
 };
 
 const onErrorDocumentClick = (evt) => {
-  const withinErrorMessageBoundaries = evt.composedPath().includes(errorMessageInner);
+  const withinErrorMessageBoundaries = evt.composedPath().includes(errorMessageInnerElement);
   if (!withinErrorMessageBoundaries) {
     closeErrorMessage();
   }
 };
 
 const showImageUploadErrorMessage = () => {
-  document.body.append(errorMessage);
+  document.body.append(errorMessageElement);
 
-  errorMessageButton.addEventListener('click', () => {
-    errorMessage.remove();
+  errorMessageButtonElement.addEventListener('click', () => {
+    errorMessageElement.remove();
   });
 
   document.addEventListener('keydown', onErrorEscKeydown);
@@ -36,7 +36,7 @@ const showImageUploadErrorMessage = () => {
 };
 
 function closeErrorMessage () {
-  errorMessage.remove();
+  errorMessageElement.remove();
   document.removeEventListener('keydown', onErrorEscKeydown);
   document.removeEventListener('click', onErrorDocumentClick);
 }
@@ -49,17 +49,17 @@ const onSuccessEscKeydown = (evt) => {
 };
 
 const onSuccessDocumentClick = (evt) => {
-  const withinSuccessMessageBoundaries = evt.composedPath().includes(successMessageInner);
+  const withinSuccessMessageBoundaries = evt.composedPath().includes(successMessageInnerElement);
   if (!withinSuccessMessageBoundaries) {
     closeSuccessMessage();
   }
 };
 
 const showImageUploadSuccessMessage = () => {
-  document.body.append(successMessage);
+  document.body.append(successMessageElement);
 
-  successMessageButton.addEventListener('click', () => {
-    successMessage.remove();
+  successMessageButtonElement.addEventListener('click', () => {
+    successMessageElement.remove();
   });
 
   document.addEventListener('keydown', onSuccessEscKeydown);
@@ -67,7 +67,7 @@ const showImageUploadSuccessMessage = () => {
 };
 
 function closeSuccessMessage () {
-  successMessage.remove();
+  successMessageElement.remove();
   document.removeEventListener('keydown', onSuccessEscKeydown);
   document.removeEventListener('click', onSuccessDocumentClick);
 }

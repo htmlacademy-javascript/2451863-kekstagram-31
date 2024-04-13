@@ -1,15 +1,15 @@
 import {debounce, getUniqueIntegerFromRange} from './utils.js';
 import {renderMiniatures, clearMiniatures} from './render-miniatures.js';
 
-const sortingButtonsContainer = document.querySelector('.img-filters');
-
 const RANDOM_PICTURE_COUNT = 10;
 
-const SORT = {
+const Sort = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
+
+const sortingButtonsElement = document.querySelector('.img-filters');
 
 const sortDiscussed = (miniatures) => miniatures.slice().sort((miniatureA, miniatureB) => miniatureB.comments.length - miniatureA.comments.length);
 
@@ -27,16 +27,16 @@ const sortRandom = (miniatures) => {
 
 const sortMiniatures = (miniatures, sortingMode) => {
   switch(sortingMode) {
-    case SORT.DEFAULT:
+    case Sort.DEFAULT:
       return miniatures;
-    case SORT.DISCUSSED:
+    case Sort.DISCUSSED:
       return sortDiscussed(miniatures);
-    case SORT.RANDOM:
+    case Sort.RANDOM:
       return sortRandom(miniatures);
   }
 };
 
-const getSortingMode = () => sortingButtonsContainer.querySelector('.img-filters__button--active').id;
+const getSortingMode = () => sortingButtonsElement.querySelector('.img-filters__button--active').id;
 
 const debounceMiniaturesRender = debounce((miniatures) => {
   clearMiniatures();
@@ -44,11 +44,11 @@ const debounceMiniaturesRender = debounce((miniatures) => {
 });
 
 const setMiniatureSorting = (miniatures) => {
-  sortingButtonsContainer.classList.remove('img-filters--inactive');
+  sortingButtonsElement.classList.remove('img-filters--inactive');
 
-  sortingButtonsContainer.addEventListener('click', (evt) => {
+  sortingButtonsElement.addEventListener('click', (evt) => {
     if (evt.target.closest('.img-filters__button')) {
-      sortingButtonsContainer.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+      sortingButtonsElement.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       evt.target.classList.add('img-filters__button--active');
 
       debounceMiniaturesRender(sortMiniatures(miniatures, getSortingMode()));

@@ -1,25 +1,27 @@
 import {isEscapeKey, openModal, closeModal, setElementDisabledAttribute} from './utils.js';
-import {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput} from './form-validation.js';
+import {validateForm, createPristineValidator, destroyPristineValidator} from './form-validation.js';
 import {createScaling, removeScaling} from './image-scaling.js';
 import {createFilterSlider, removeFilterSlider} from './filter-control.js';
 import {sendData} from './api.js';
 import {showImageUploadSuccessMessage, showImageUploadErrorMessage} from './upload-message.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-const uploadInput = uploadForm.querySelector('.img-upload__input');
-const uploadCancel = uploadForm.querySelector('.img-upload__cancel');
-const uploadSubmit = uploadForm.querySelector('.img-upload__submit');
-const uploadPreview = uploadForm.querySelector('.img-upload__preview img');
-const uploadEffectsPreview = uploadForm.querySelectorAll('.effects__preview');
-
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const DEFAULT_PREVIEW_SRC = 'img/upload-default-image.jpg';
 
+const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadOverlayElement = uploadFormElement.querySelector('.img-upload__overlay');
+const uploadInputElement = uploadFormElement.querySelector('.img-upload__input');
+const uploadCancelElement = uploadFormElement.querySelector('.img-upload__cancel');
+const uploadSubmitElement = uploadFormElement.querySelector('.img-upload__submit');
+const uploadPreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
+const uploadEffectsPreviewElements = uploadFormElement.querySelectorAll('.effects__preview');
+const uploadHashtagsInputElement = uploadFormElement.querySelector('.text__hashtags');
+const uploadDescriptionInputElement = uploadFormElement.querySelector('.text__description');
+
 const onEscKeydown = (evt) => {
   if (!document.querySelector('.error')) {
-    if (document.activeElement === uploadHashtagsInput || document.activeElement === uploadDescriptionInput) {
+    if (document.activeElement === uploadHashtagsInputElement || document.activeElement === uploadDescriptionInputElement) {
       evt.stopPropagation();
     } else if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -37,7 +39,7 @@ const onFormSubmit = (evt) => {
   evt.preventDefault();
 
   if (validateForm()) {
-    setElementDisabledAttribute(uploadSubmit, true);
+    setElementDisabledAttribute(uploadSubmitElement, true);
 
     sendData(new FormData(evt.target))
       .then(submitForm)
@@ -45,57 +47,57 @@ const onFormSubmit = (evt) => {
         showImageUploadErrorMessage();
       })
       .finally(() => {
-        setElementDisabledAttribute(uploadSubmit, false);
+        setElementDisabledAttribute(uploadSubmitElement, false);
       });
   }
 };
 
-function openUploadOverlay () {
-  const file = uploadInput.files[0];
+const openUploadOverlay = () => {
+  const file = uploadInputElement.files[0];
   const fileName = file.name.toLowerCase();
   const typeCheck = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (typeCheck) {
     const currentUploadImageSrc = URL.createObjectURL(file);
 
-    uploadPreview.src = currentUploadImageSrc;
+    uploadPreviewElement.src = currentUploadImageSrc;
 
-    uploadEffectsPreview.forEach((item) => {
+    uploadEffectsPreviewElements.forEach((item) => {
       item.style.backgroundImage = `url(${currentUploadImageSrc})`;
     });
 
-    openModal(uploadOverlay);
+    openModal(uploadOverlayElement);
 
     document.addEventListener('keydown', onEscKeydown);
-    uploadCancel.addEventListener('click', closeUploadOverlay);
+    uploadCancelElement.addEventListener('click', closeUploadOverlay);
 
     createPristineValidator();
-    uploadForm.addEventListener('submit', onFormSubmit);
+    uploadFormElement.addEventListener('submit', onFormSubmit);
 
     createScaling();
     createFilterSlider();
   }
-}
+};
 
 function closeUploadOverlay () {
-  closeModal(uploadOverlay);
+  closeModal(uploadOverlayElement);
 
   document.removeEventListener('keydown', onEscKeydown);
-  uploadCancel.removeEventListener('click', closeUploadOverlay);
+  uploadCancelElement.removeEventListener('click', closeUploadOverlay);
 
-  uploadForm.removeEventListener('submit', onFormSubmit);
+  uploadFormElement.removeEventListener('submit', onFormSubmit);
   destroyPristineValidator();
 
-  uploadForm.reset();
+  uploadFormElement.reset();
 
   removeScaling();
   removeFilterSlider();
 
-  uploadPreview.src = DEFAULT_PREVIEW_SRC;
+  uploadPreviewElement.src = DEFAULT_PREVIEW_SRC;
 }
 
 const createUpload = () => {
-  uploadInput.addEventListener('change', openUploadOverlay);
+  uploadInputElement.addEventListener('change', openUploadOverlay);
 };
 
 export {createUpload};

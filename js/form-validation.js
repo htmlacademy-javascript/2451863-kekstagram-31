@@ -1,66 +1,65 @@
-const uploadForm = document.querySelector('.img-upload__form');
-
-const uploadHashtagsInput = uploadForm.querySelector('.text__hashtags');
-const uploadDescriptionInput = uploadForm.querySelector('.text__description');
-
-const hashtagRegexp = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const DESCRIPTION_SYMBOL_COUNT_MAX = 140;
 const HASHTAGS_COUNT_MAX = 5;
 
 const DESCRIPTION_VALIDATION_ERROR_MESSAGE = `Длина описания не может превышать ${DESCRIPTION_SYMBOL_COUNT_MAX}`;
 
-const HASHTAG_VALIDATION_ERROR_MESSAGES = {
+const HashtagValidationErrorMessage = {
   HASHTAG_INVALID: 'Недопустимые символы в хэштэге',
   HASHTAG_NOT_UNIQUE: 'Хэштэг должен быть уникальным!',
   HASHTAG_COUNT_INVALID: `Превышено допустимое число хэштэгов. Их может быть только ${HASHTAGS_COUNT_MAX}!`,
 };
 
+const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadHashtagsInputElement = uploadFormElement.querySelector('.text__hashtags');
+const uploadDescriptionInputElement = uploadFormElement.querySelector('.text__description');
+
 let pristine;
 
-const checkIndividualHashtag = (hashtagsList) => hashtagsList.every((hashtag) => hashtagRegexp.test(hashtag));
+const checkIndividualHashtag = (hashtags) => hashtags.every((hashtag) => HASHTAG_REGEXP.test(hashtag));
 
-const checkUniqueHashtag = (hashtagsList) => hashtagsList.every((value, index, array) => array.lastIndexOf(value) === index);
+const checkUniqueHashtag = (hashtags) => hashtags.every((value, index, array) => array.lastIndexOf(value) === index);
 
-const checkHashtagCount = (hashtagsList) => hashtagsList.length <= HASHTAGS_COUNT_MAX;
+const checkHashtagCount = (hashtags) => hashtags.length <= HASHTAGS_COUNT_MAX;
 
 const validateHashtags = () => {
-  const hashtagsList = uploadHashtagsInput
+  const hashtags = uploadHashtagsInputElement
     .value
     .trim()
     .split(' ')
     .map((hashtag) => hashtag.toLowerCase())
     .filter((hashtag) => hashtag);
 
-  return hashtagsList.length === 0 || checkIndividualHashtag(hashtagsList) && checkUniqueHashtag(hashtagsList) && checkHashtagCount(hashtagsList);
+  return hashtags.length === 0 || checkIndividualHashtag(hashtags) && checkUniqueHashtag(hashtags) && checkHashtagCount(hashtags);
 };
 
 const getHashtagValidationErrorMessage = () => {
-  const hashtagsList = uploadHashtagsInput.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
+  const hashtags = uploadHashtagsInputElement.value.trim().split(' ').map((hashtag) => hashtag.toLowerCase());
 
-  if (!checkIndividualHashtag(hashtagsList)) {
-    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_INVALID;
+  if (!checkIndividualHashtag(hashtags)) {
+    return HashtagValidationErrorMessage.HASHTAG_INVALID;
   }
-  if (!checkUniqueHashtag(hashtagsList)) {
-    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_NOT_UNIQUE;
+  if (!checkUniqueHashtag(hashtags)) {
+    return HashtagValidationErrorMessage.HASHTAG_NOT_UNIQUE;
   }
-  if (!checkHashtagCount(hashtagsList)) {
-    return HASHTAG_VALIDATION_ERROR_MESSAGES.HASHTAG_COUNT_INVALID;
+  if (!checkHashtagCount(hashtags)) {
+    return HashtagValidationErrorMessage.HASHTAG_COUNT_INVALID;
   }
 };
 
-const validateDescriptionLength = () => uploadDescriptionInput.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
+const validateDescriptionLength = () => uploadDescriptionInputElement.value.trim().length <= DESCRIPTION_SYMBOL_COUNT_MAX;
 
 const createPristineValidator = () => {
-  pristine = new Pristine(uploadForm, {
+  pristine = new Pristine(uploadFormElement, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
     errorTextTag: 'div',
   });
 
-  pristine.addValidator(uploadHashtagsInput, validateHashtags, getHashtagValidationErrorMessage);
-  pristine.addValidator(uploadDescriptionInput, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
+  pristine.addValidator(uploadHashtagsInputElement, validateHashtags, getHashtagValidationErrorMessage);
+  pristine.addValidator(uploadDescriptionInputElement, validateDescriptionLength, DESCRIPTION_VALIDATION_ERROR_MESSAGE);
 };
 
 const destroyPristineValidator = () => {
@@ -69,4 +68,4 @@ const destroyPristineValidator = () => {
 
 const validateForm = () => pristine.validate();
 
-export {validateForm, createPristineValidator, destroyPristineValidator, uploadHashtagsInput, uploadDescriptionInput};
+export {validateForm, createPristineValidator, destroyPristineValidator};
