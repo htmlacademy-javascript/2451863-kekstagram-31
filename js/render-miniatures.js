@@ -1,16 +1,16 @@
-const miniatureTemplate = document.querySelector('#picture').content.querySelector('a');
-const miniaturesFragment = document.createDocumentFragment();
-const miniaturesSection = document.querySelector('.pictures');
+const miniatureTemplateElement = document.querySelector('#picture').content.querySelector('a');
+const miniaturesFragmentElement = document.createDocumentFragment();
+const miniaturesSectionElement = document.querySelector('.pictures');
 
 const clearMiniatures = () => {
-  miniaturesSection.querySelectorAll('.picture').forEach((elem) => {
+  miniaturesSectionElement.querySelectorAll('.picture').forEach((elem) => {
     elem.remove();
   });
 };
 
 const renderMiniatures = (miniatures) => {
   miniatures.forEach(({id, url, description, likes, comments}) => {
-    const newMiniature = miniatureTemplate.cloneNode(true);
+    const newMiniature = miniatureTemplateElement.cloneNode(true);
 
     newMiniature.querySelector('img').id = id;
     newMiniature.querySelector('img').src = url;
@@ -18,10 +18,10 @@ const renderMiniatures = (miniatures) => {
     newMiniature.querySelector('.picture__likes').textContent = likes;
     newMiniature.querySelector('.picture__comments').textContent = comments.length;
 
-    miniaturesFragment.appendChild(newMiniature);
+    miniaturesFragmentElement.appendChild(newMiniature);
   });
 
-  miniaturesSection.appendChild(miniaturesFragment);
+  miniaturesSectionElement.appendChild(miniaturesFragmentElement);
 };
 
 export {renderMiniatures, clearMiniatures};

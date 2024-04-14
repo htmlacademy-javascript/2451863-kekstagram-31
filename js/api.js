@@ -38,6 +38,6 @@ const load = (route, errorMessage, method = 'GET', body = null) =>
 
 const getData = () => load(Route.GET_DATA, ErrorMessage.GET_DATA);
 
-const sendData = (body) => load (Route.SEND_DATA, ErrorMessage.SEND_DATA, 'POST', body);
+const sendData = (body) => load(Route.SEND_DATA, ErrorMessage.SEND_DATA, 'POST', body);
 
 export {getData, sendData, showGetDataErrorMessage, ErrorMessage};
