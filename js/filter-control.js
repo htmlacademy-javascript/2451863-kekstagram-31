@@ -35,6 +35,15 @@ const FilterOptions = {
   },
 };
 
+const FilterEffects = {
+  'effect-none': setFilterNone,
+  'effect-chrome': setFilterChrome,
+  'effect-sepia': setFilterSepia,
+  'effect-marvin': setFilterMarvin,
+  'effect-phobos': setFilterPhobos,
+  'effect-heat': setFilterHeat,
+};
+
 const uploadOverlayElement = document.querySelector('.img-upload__overlay');
 const uploadFiltersElement = uploadOverlayElement.querySelector('.img-upload__effects');
 const uploadFilterValueElement = uploadOverlayElement.querySelector('.effect-level__value');
@@ -44,38 +53,29 @@ const uploadFormImagePreviewElement = uploadOverlayElement.querySelector('.img-u
 
 let selectedFilterType = FilterType.EFFECT_NONE;
 
-const setFilterNone = () => {
+function setFilterNone () {
   uploadFormImagePreviewElement.style.filter = null;
-};
+}
 
-const setFilterChrome = () => {
+function setFilterChrome () {
   uploadFormImagePreviewElement.style.filter = `grayscale(${uploadFilterValueElement.value})`;
-};
+}
 
-const setFilterSepia = () => {
+function setFilterSepia () {
   uploadFormImagePreviewElement.style.filter = `sepia(${uploadFilterValueElement.value})`;
-};
+}
 
-const setFilterMarvin = () => {
+function setFilterMarvin () {
   uploadFormImagePreviewElement.style.filter = `invert(${uploadFilterValueElement.value}%)`;
-};
+}
 
-const setFilterPhobos = () => {
+function setFilterPhobos () {
   uploadFormImagePreviewElement.style.filter = `blur(${uploadFilterValueElement.value}px)`;
-};
+}
 
-const setFilterHeat = () => {
+function setFilterHeat () {
   uploadFormImagePreviewElement.style.filter = `brightness(${uploadFilterValueElement.value})`;
-};
-
-const FilterEffects = {
-  'effect-none': setFilterNone,
-  'effect-chrome': setFilterChrome,
-  'effect-sepia': setFilterSepia,
-  'effect-marvin': setFilterMarvin,
-  'effect-phobos': setFilterPhobos,
-  'effect-heat': setFilterHeat,
-};
+}
 
 const applyFilterEffect = () => {
   FilterEffects[selectedFilterType]();
